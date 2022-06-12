@@ -5,7 +5,6 @@ services:
     build: ./
     volumes:
       - ./config:/var/www/config
-      - ./vendor:/var/www/vendor
       - ./views:/var/www/views
       - ./models:/var/www/models
       - ./controllers:/var/www/controllers
