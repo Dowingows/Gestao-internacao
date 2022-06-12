@@ -1,0 +1,15 @@
+version: '2'
+services:
+  php:
+    user: root
+    build: ./
+    volumes:
+      - ./views:/var/www/views
+      - ./models:/var/www/models
+      - ./controllers:/var/www/controllers
+      - ./composer.json:/var/www/composer.json
+      - ./composer.lock:/var/www/composer.lock
+      - ./web/index.php:/var/www/html/index.php
+      - ./.env:/var/www/.env
+    ports:
+      - '8000:80'
