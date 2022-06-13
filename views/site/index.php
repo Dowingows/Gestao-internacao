@@ -7,7 +7,7 @@ $this->title = 'Gestão de Internação';
 <div class="site-index">
 
     <div class="jumbotron text-center bg-transparent">
-        <h1 class="display-4">Congratulations! <?= "aki {$_ENV['APP_NAME']}" ?></h1>
+        <h1 class="display-4">Congratulations! <?= "aki ".getenv('APP_NAME')."" ?></h1>
 
         <p class="lead">You have successfully created your Yii-powered application.</p>
 
