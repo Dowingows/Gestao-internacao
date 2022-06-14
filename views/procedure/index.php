@@ -32,7 +32,11 @@ $this->params['breadcrumbs'][] = $this->title;
             'table',
             'procedure_code',
             'description:ntext',
-            'price',
+            [
+                'attribute' => 'price',
+                'format' => ['currency']
+
+            ],
             [
                 'class' => ActionColumn::className(),
                 'urlCreator' => function ($action, app\models\Procedure $model, $key, $index, $column) {
