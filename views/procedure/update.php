@@ -5,10 +5,12 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model app\models\Procedure */
 
-$this->title = 'Atualizar Procedimento: ' . $model->id;
-$this->params['breadcrumbs'][] = ['label' => 'Procedures', 'url' => ['index']];
+$this->title = Yii::t('app', 'Update Procedure: {name}', [
+    'name' => $model->procedure_code,
+]);
+$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Procedures'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model->id, 'url' => ['view', 'id' => $model->id]];
-$this->params['breadcrumbs'][] = 'Update';
+$this->params['breadcrumbs'][] = Yii::t('app', 'Update');
 ?>
 <div class="procedure-update">
 

@@ -8,6 +8,7 @@ services:
       - ./views:/var/www/views
       - ./models:/var/www/models
       - ./controllers:/var/www/controllers
+      - ./messages:/var/www/messages
       - ./migrations:/var/www/migrations
       - ./composer.json:/var/www/composer.json
       - ./composer.lock:/var/www/composer.lock
