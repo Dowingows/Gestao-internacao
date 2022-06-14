@@ -18,6 +18,8 @@ WORKDIR /var/www/html
 
 COPY ./web ./
 
+COPY ./docker-configs/server/.htaccess ./.htaccess
+
 WORKDIR /var/www
 COPY . ./
 RUN rm -rf vendor/*

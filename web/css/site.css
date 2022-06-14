@@ -82,3 +82,12 @@ a.desc:after {
 .nav > li > form > button.logout:focus {
     outline: none;
 }
+
+.has-error .help-block {
+    color: #dc3545;
+    font-size: 80%;
+}
+
+.has-error input{
+    border-color: #dc3545;
+}
