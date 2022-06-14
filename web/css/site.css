@@ -88,6 +88,6 @@ a.desc:after {
     font-size: 80%;
 }
 
-.has-error input{
+.has-error input textarea{
     border-color: #dc3545;
 }

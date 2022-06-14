@@ -1,0 +1,11 @@
+class_name: AcceptanceTester
+modules:
+    enabled:
+        - WebDriver:
+            host: basic-webdriver-1
+            url: http://basic-php-1
+            browser: firefox
+        - Yii2:
+            part: orm
+            entryScript: index.php
+            cleanup: false
