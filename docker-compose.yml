@@ -14,22 +14,40 @@ services:
       - ./.env:/var/www/.env
     ports:
       - '8000:80'
-  mariadb:
-    image: mariadb:latest
-    restart: always
-    volumes:
-      - mariadb-data:/var/lib/mysql
+    networks:
+      - postgres-compose-network
+      
+  database:
+    image: postgres:${POSTGRES_VERSION:-13}-alpine
     environment:
-      MYSQL_ROOT_PASSWORD: qwerty
-
-  phpmyadmin:
-    image: phpmyadmin/phpmyadmin:latest
+      POSTGRES_DB: hospital
+      # You should definitely change the password in production
+      POSTGRES_PASSWORD: "qwerty"
+      POSTGRES_USER: postgres
     ports:
-      - 8080:80
+      - "5432:5432"
+
+    networks:
+      - postgres-compose-network
+
+    volumes:
+      - db-data:/var/lib/postgresql/data:rw
+
+  pgadmin-compose:
+    image: dpage/pgadmin4
     environment:
-      - PMA_ARBITRARY=1
-      - PMA_HOST=mariadb
+      PGADMIN_DEFAULT_EMAIL: "admin@admin.com"
+      PGADMIN_DEFAULT_PASSWORD: "admin@admin.com"
+    ports:
+      - "16543:80"
     depends_on:
-      - mariadb
+      - database
+    networks:
+      - postgres-compose-network
+
+networks: 
+  postgres-compose-network:
+    driver: bridge
+
 volumes:
-  mariadb-data:
+  db-data:

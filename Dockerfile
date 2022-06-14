@@ -6,7 +6,11 @@ RUN apt-get update -y && apt-get install -y sendmail libpng-dev
 
 RUN docker-php-ext-install zip
 RUN docker-php-ext-install gd
-RUN docker-php-ext-install mysqli pdo pdo_mysql
+
+# Install Postgre PDO
+RUN apt-get install -y libpq-dev \
+    && docker-php-ext-configure pgsql -with-pgsql=/usr/local/pgsql \
+    && docker-php-ext-install pdo pdo_pgsql pgsql
 
 COPY --from=composer:latest /usr/bin/composer /usr/local/bin/composer
 
