@@ -1,2 +1,2 @@
 web: vendor/bin/heroku-php-apache2 web/
-release: ./yii migrate
+release: php yii migrate
