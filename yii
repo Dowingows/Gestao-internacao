@@ -15,7 +15,7 @@ if(getenv('PROD') == null || getenv('PROD') != 'true'){
     defined('YII_DEBUG') or define('YII_DEBUG', true);
     defined('YII_ENV') or define('YII_ENV', 'dev');
     
-    $dotenv =  \Dotenv\Dotenv::createUnsafeImmutable(__DIR__,'../.env');
+    $dotenv =  \Dotenv\Dotenv::createUnsafeImmutable(__DIR__,'.env');
     $dotenv->load();
     $dotenv->required(['DB_HOST', 'DB_NAME', 'DB_USER', 'DB_PASS']);
 }
