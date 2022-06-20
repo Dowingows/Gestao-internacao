@@ -41,7 +41,7 @@ $this->params['breadcrumbs'][] = $this->title;
             //'price',
             [
                 'class' => ActionColumn::className(),
-                'urlCreator' => function ($action, Medicine $model, $key, $index, $column) {
+                'urlCreator' => function ($action, app\models\Medicine $model, $key, $index, $column) {
                     return Url::toRoute([$action, 'id' => $model->id]);
                  }
             ],
