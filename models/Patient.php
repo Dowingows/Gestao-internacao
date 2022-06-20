@@ -29,7 +29,7 @@ class Patient extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['card_expiration_date'],'date', 'format' => 'php:Y-m-d', 'message' => 'Validade inválida'],
+            [['card_expiration_date'],'date', 'format' => 'php:Y-m-d', 'message' => '{attribute} não é uma data válida!'],
             [['card_id_number'], 'integer', 'message' => '{attribute} deve ser um número inteiro!'],
             [['name', 'card_id_number', 'card_health_national'], 'string', 'max' => 50, 'message' => '{attribute} deve ter tamanho máximo de 255 caracteres!'],
             [['name', 'card_id_number', 'card_health_national'], 'required', 'message' => 'Campo {attribute} não pode ser vazio!'],
