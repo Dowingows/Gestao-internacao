@@ -38,8 +38,14 @@ AppAsset::register($this);
         'options' => ['class' => 'navbar-nav'],
         'items' => [
             ['label' => Yii::t('app','Home'), 'url' => ['/site/index']],
-            ['label' => Yii::t('app','Procedures'), 'url' => ['/procedure/index']],
-            ['label' => Yii::t('app','Medicines'), 'url' => ['/medicine/index']],
+            ['label' => 'Login', 'url' => ['/site/login']],
+            ['label' => Yii::t('app','Tables'), 'items' => [
+                ['label' => Yii::t('app','Professionals'), 'url' => ['/professional/index']],
+                ['label' => Yii::t('app','Patients'), 'url' => ['/patient/index']],
+                ['label' => Yii::t('app','Medicines'), 'url' => ['/medicine/index']],
+                ['label' => Yii::t('app','Procedures'), 'url' => ['/procedure/index']],
+                ['label' => Yii::t('app','Supplies'), 'url' => ['/supply/index']]
+            ]],
             Yii::$app->user->isGuest ? (
                 ['label' => 'Login', 'url' => ['/site/login']]
             ) : (
@@ -52,8 +58,7 @@ AppAsset::register($this);
                 . Html::endForm()
                 . '</li>'
             )
-        ],
-    ]);
+    ]]);
     NavBar::end();
     ?>
 </header>

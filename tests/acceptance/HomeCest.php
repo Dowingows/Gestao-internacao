@@ -8,11 +8,9 @@ class HomeCest
     {
         $I->amOnPage(Url::toRoute('/site/index'));        
         $I->see('Congratulations');
-        
-        $I->seeLink('Procedimentos');
-        $I->click('Procedimentos');
+    
         $I->wait(2); // wait for page to be opened
         
-        $I->see('Procedimentos');
+        $I->see('Tabelas');
     }
 }

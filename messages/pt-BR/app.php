@@ -8,11 +8,14 @@ return [
     'Medicines' => 'Medicamentos',
     'Patients' => 'Pacientes',
     'Professionals' => 'Profissionais',
+    'Supplies' => 'Materiais',
+    'Tables' => 'Tabelas',
     
     'Create Procedure' => 'Cadastrar Procedimento',
     'Create Medicine' => 'Cadastrar Medicamento',
     'Create Patient' => 'Cadastrar Paciente',    
-    'Create Professional' => 'Cadastrar Professional',    
+    'Create Professional' => 'Cadastrar Professional',
+    'Create Supply' => 'Cadastrar Material',    
     
     'Are you sure you want to delete this item?' => 'Deseja realmente excluir este item?',
     
@@ -20,6 +23,7 @@ return [
     'Update Medicine: {name}' => 'Atualizar Medicamento: {name}',
     'Update Patient: {name}' => 'Atualizar Paciente: {name}',
     'Update Professional: {name}' => 'Atualizar Profissional: {name}',
+    'Update Supply: {name}' => 'Atualizar Material: {name}',
     
     'Update' => 'Atualizar',
     'Delete' => 'Remover',
