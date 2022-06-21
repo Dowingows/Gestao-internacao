@@ -4,14 +4,14 @@ use yii\helpers\Html;
 use yii\widgets\DetailView;
 
 /* @var $this yii\web\View */
-/* @var $model app\models\Medicine */
+/* @var $model app\models\Professional */
 
-$this->title = $model->id;
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Medicines'), 'url' => ['index']];
+$this->title = $model->name;
+$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Professionals'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
 ?>
-<div class="medicine-view">
+<div class="professional-view">
 
     <h1><?= Html::encode($this->title) ?></h1>
 
@@ -30,18 +30,16 @@ $this->params['breadcrumbs'][] = $this->title;
         'model' => $model,
         'attributes' => [
             'id',
-            'cod_tiss',
-            'um_vr',
-            'und',
-            'description:ntext',
-            'cod_tnumm',
-            'cod_brasindice',
-            'cod_tiss_2',
-            'cod_agend',
-            'cod_agend_cob',
+            'name',
+            'council',
+            'council_number',
+            'uf',
+            'cbo_code',
             [
-                'attribute' => 'price',
-                'format' => ['currency']
+                'attribute' => 'type',
+                'format' =>  function() use ($model) { 
+                    return app\models\Professional::getTypeLabel($model->type); 
+                }
 
             ]
         ],
