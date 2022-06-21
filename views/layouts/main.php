@@ -38,7 +38,6 @@ AppAsset::register($this);
         'options' => ['class' => 'navbar-nav'],
         'items' => [
             ['label' => Yii::t('app','Home'), 'url' => ['/site/index']],
-            ['label' => 'Login', 'url' => ['/site/login']],
             ['label' => Yii::t('app','Tables'), 'items' => [
                 ['label' => Yii::t('app','Professionals'), 'url' => ['/professional/index']],
                 ['label' => Yii::t('app','Patients'), 'url' => ['/patient/index']],
