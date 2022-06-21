@@ -14,7 +14,7 @@ return [
     'Create Procedure' => 'Cadastrar Procedimento',
     'Create Medicine' => 'Cadastrar Medicamento',
     'Create Patient' => 'Cadastrar Paciente',    
-    'Create Professional' => 'Cadastrar Professional',
+    'Create Professional' => 'Cadastrar Profissional',
     'Create Supply' => 'Cadastrar Material',    
     
     'Are you sure you want to delete this item?' => 'Deseja realmente excluir este item?',
