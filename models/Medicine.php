@@ -39,7 +39,7 @@ class Medicine extends \yii\db\ActiveRecord
             [['price'], 'number', 'message' => '{attribute} deve ser um número decimal!'],
             [['cod_tiss', 'cod_tnumm', 'cod_tiss_2', 'cod_agend', 'cod_agend_cob'], 'integer', 'message' => '{attribute} deve ser um número inteiro!'],
             [['cod_tiss', 'um_vr', 'und', 'cod_tnumm', 'cod_brasindice', 'cod_tiss_2', 'cod_agend', 'cod_agend_cob'], 'string', 'max' => 50, 'message' => '{attribute} deve ter tamanho máximo de 255 caracteres!'],
-            [['cod_tiss', 'um_vr', 'und', 'description', 'cod_brasindice', 'cod_tiss_2'], 'required', 'message' => 'Campo {attribute} não pode ser vazio!'],
+            [['cod_tiss', 'um_vr', 'und', 'description', 'cod_brasindice', 'cod_tiss_2', 'price'], 'required', 'message' => 'Campo {attribute} não pode ser vazio!'],
         ];
     }
 

@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+use kartik\number\NumberControl;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Medicine */
@@ -30,7 +31,18 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'cod_agend_cob')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'price')->textInput() ?>
+    <?= $form->field($model, 'price')->widget(NumberControl::classname(), [
+            'maskedInputOptions' => [
+                'prefix' => 'R$ ',
+                'min' => 0,
+                'max' => 10000,
+                'allowMinus' => false,
+                'groupSeparator' => ' ',
+                'radixPoint' => ',',
+                // 'digits' => 2,
+                'rightAlign' => false
+            ],
+    ]); ?>
 
     <div class="form-group">
         <?= Html::submitButton(Yii::t('app', 'Save'), ['class' => 'btn btn-success']) ?>
