@@ -10,8 +10,10 @@ return [
     'Professionals' => 'Profissionais',
     'Supplies' => 'Materiais',
     'Tables' => 'Tabelas',
+    'Hospitals' => 'Hospitais',
     
     'Create Procedure' => 'Cadastrar Procedimento',
+    'Create Hospital' => 'Cadastrar Hospital',
     'Create Medicine' => 'Cadastrar Medicamento',
     'Create Patient' => 'Cadastrar Paciente',    
     'Create Professional' => 'Cadastrar Profissional',
