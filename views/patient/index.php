@@ -31,7 +31,12 @@ $this->params['breadcrumbs'][] = $this->title;
             'id',
             'name',
             'card_id_number',
-            'card_expiration_date',
+            [
+                'attribute'=>'card_expiration_date',
+                'value' => function ($model) {
+                    return Yii::$app->formatter->asDateTime($model->card_expiration_date, 'php:d/m/Y');
+                },
+	        ],
             'card_health_national',
             [
                 'class' => ActionColumn::className(),
