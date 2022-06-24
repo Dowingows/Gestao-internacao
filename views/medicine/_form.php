@@ -35,11 +35,10 @@ use kartik\number\NumberControl;
             'maskedInputOptions' => [
                 'prefix' => 'R$ ',
                 'min' => 0,
-                'max' => 10000,
+                'max' => 100000000,
                 'allowMinus' => false,
                 'groupSeparator' => ' ',
                 'radixPoint' => ',',
-                // 'digits' => 2,
                 'rightAlign' => false
             ],
     ]); ?>

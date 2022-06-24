@@ -7,7 +7,7 @@ class ProcedureCrudCest
     protected $tableField = 'input[name="Procedure[table]"]';
     protected $procedureCodeField = 'input[name="Procedure[procedure_code]"]';
     protected $descriptionField = 'textarea[name="Procedure[description]"]';
-    protected $priceField = 'input[name="Procedure[price]"]';
+    protected $priceField = 'input[name="procedure-price-disp"]';
 
     public function _before(AcceptanceTester $I)
     {
@@ -30,7 +30,7 @@ class ProcedureCrudCest
             'table' => '2030',
             'procedure_code' => '9876',
             'description' => 'Descrição inicial',
-            'price' => '12.35',
+            'price' => '12,35',
         ];
 
         $I->fillField($this->tableField,  $newData['table']);
@@ -54,7 +54,7 @@ class ProcedureCrudCest
             'table' => '1020',
             'procedure_code' => '1234',
             'description' => 'Nova descrição',
-            'price' => '20',
+            'price' => '20,32',
         ];
 
         $I->fillField($this->tableField,  $newData['table']);

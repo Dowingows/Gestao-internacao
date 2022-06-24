@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+use kartik\number\NumberControl;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Procedure */
@@ -18,7 +19,17 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'description')->textarea(['rows' => 6]) ?>
 
-    <?= $form->field($model, 'price')->textInput() ?>
+    <?= $form->field($model, 'price')->widget(NumberControl::classname(), [
+            'maskedInputOptions' => [
+                'prefix' => 'R$ ',
+                'min' => 0,
+                'max' => 100000000,
+                'allowMinus' => false,
+                'groupSeparator' => ' ',
+                'radixPoint' => ',',
+                'rightAlign' => false
+            ],
+    ]); ?>
 
     <div class="form-group">
         <?= Html::submitButton(Yii::t('app', 'Save'), ['class' => 'btn btn-success']) ?>
