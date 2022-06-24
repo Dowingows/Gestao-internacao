@@ -39,7 +39,11 @@ $this->params['breadcrumbs'][] = $this->title;
             'cod_agend',
             'cod_agend_cob',
             'nature',
-            'price',
+            [
+                'attribute' => 'price',
+                'format' => ['currency']
+
+            ]
         ],
     ]) ?>
 

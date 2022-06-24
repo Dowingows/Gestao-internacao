@@ -13,7 +13,7 @@ class SupplyCrudCest
     protected $codAgendNumberField = 'input[name="Supply[cod_agend]"]';
     protected $codAgendCobField = 'input[name="Supply[cod_agend_cob]"]';
     protected $natureField = 'input[name="Supply[nature]"]';
-    protected $priceField = 'input[name="Supply[price]"]';
+    protected $priceField = 'input[name="supply-price-disp"]';
     
     
 
@@ -44,7 +44,7 @@ class SupplyCrudCest
             'cod_agend' => '324671287',
             'cod_agend_cob' => '234234',
             'nature' => 'C',
-            'price' => '5.00',
+            'price' => '5,13',
         ];
 
         $I->fillField($this->codSimproField,  $newData['cod_simpro']);
@@ -83,7 +83,7 @@ class SupplyCrudCest
             'cod_agend' => '8767862',
             'cod_agend_cob' => '212567',
             'nature' => 'g',
-            'price' => '2.53',
+            'price' => '2,57',
         ];
 
         $I->fillField($this->codSimproField,  $newData['cod_simpro']);
