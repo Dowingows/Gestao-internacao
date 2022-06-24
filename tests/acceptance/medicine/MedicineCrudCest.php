@@ -13,7 +13,7 @@ class MedicineCrudCest
     protected $codTiss2Field = 'input[name="Medicine[cod_tiss_2]"]';
     protected $codAgendField = 'input[name="Medicine[cod_agend]"]';
     protected $codAgendCobField = 'input[name="Medicine[cod_agend_cob]"]';
-    protected $priceField = 'input[name="Medicine[price]"]';
+    protected $priceField = 'input[name="medicine-price-disp"]';
     
     
 
@@ -44,7 +44,7 @@ class MedicineCrudCest
             'cod_tiss_2' =>'1',
             'cod_agend'=> '123',
             'cod_agend_cob'=>'234',
-            'price' => '1.75',
+            'price' => '1,75',
         ];
 
 
@@ -83,7 +83,7 @@ class MedicineCrudCest
             'cod_tiss_2' =>'2',
             'cod_agend'=> '627',
             'cod_agend_cob'=>'432',
-            'price' => '3.55',
+            'price' => '3,55',
         ];
 
 
