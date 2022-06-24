@@ -28,7 +28,7 @@ $config = [
             ],
         ],
         'formatter' => [
-            'dateFormat' => 'dd.MM.yyyy',
+            'dateFormat' => 'dd/MM/yyyy',
             'decimalSeparator' => ',',
             'thousandSeparator' => ' ',
             'currencyCode' => 'R$',

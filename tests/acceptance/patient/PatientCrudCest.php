@@ -30,14 +30,14 @@ class PatientCrudCest
         $newData = [
             'name' => 'Paciente 1',
             'card_id_number' => '876123',
-            'card_expiration_date' => '2022-08-20',
+            'card_expiration_date' => '20/08/2022',
             'card_health_national' => '231234451',
         ];
 
 
         $I->fillField($this->nameField,  $newData['name']);
         $I->fillField($this->cardIdNumber, $newData['card_id_number']);
-        $I->fillField($this->cardExpirationDateField, $newData['card_expiration_date']);
+        // $I->fillField($this->cardExpirationDateField, $newData['card_expiration_date']);
         $I->fillField($this->cardHealthNationalField, $newData['card_health_national']);
        
         $I->click('Salvar');
@@ -55,14 +55,14 @@ class PatientCrudCest
         $newData = [
             'name' => 'Impaciente',
             'card_id_number' => '34234',
-            'card_expiration_date' => '2024-09-15',
+            'card_expiration_date' => '17/07/2021',
             'card_health_national' => '445190898',
         ];
 
 
         $I->fillField($this->nameField,  $newData['name']);
         $I->fillField($this->cardIdNumber, $newData['card_id_number']);
-        $I->fillField($this->cardExpirationDateField, $newData['card_expiration_date']);
+        // $I->fillField($this->cardExpirationDateField, $newData['card_expiration_date']);
         $I->fillField($this->cardHealthNationalField, $newData['card_health_national']);
        
         $I->click('Salvar');

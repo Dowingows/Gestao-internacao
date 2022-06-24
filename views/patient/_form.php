@@ -2,12 +2,17 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
-
+use kartik\date\DatePicker;
 /* @var $this yii\web\View */
 /* @var $model app\models\Patient */
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
+<?php 
+if(isset($model->card_expiration_date)) {
+    $model->card_expiration_date = date('d/m/Y',strtotime($model->card_expiration_date));
+}
+?>
 <div class="patient-form">
 
     <?php $form = ActiveForm::begin(); ?>
@@ -16,7 +21,12 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'card_id_number')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'card_expiration_date')->textInput() ?>
+    <?= $form->field($model, 'card_expiration_date')->widget(DatePicker::className(), [
+        'convertFormat' => true,
+        'pluginOptions' => [
+            'autoclose' => true
+        ]
+    ]) ?>
 
     <?= $form->field($model, 'card_health_national')->textInput(['maxlength' => true]) ?>
 

@@ -60,6 +60,7 @@ AppAsset::register($this);
     ]]);
     NavBar::end();
     ?>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css">
 </header>
 
 <main role="main" class="flex-shrink-0">
