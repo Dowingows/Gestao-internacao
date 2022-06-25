@@ -11,8 +11,10 @@ return [
     'Supplies' => 'Materiais',
     'Tables' => 'Tabelas',
     'Hospitals' => 'Hospitais',
-    
+    'Operators' => 'Operadoras',
+    'Entities' => 'Entidades',
     'Create Procedure' => 'Cadastrar Procedimento',
+    'Create Operator' => 'Cadastrar Operadora',
     'Create Hospital' => 'Cadastrar Hospital',
     'Create Medicine' => 'Cadastrar Medicamento',
     'Create Patient' => 'Cadastrar Paciente',    
@@ -26,6 +28,8 @@ return [
     'Update Patient: {name}' => 'Atualizar Paciente: {name}',
     'Update Professional: {name}' => 'Atualizar Profissional: {name}',
     'Update Supply: {name}' => 'Atualizar Material: {name}',
+    'Update Hospital: {name}' => 'Atualizar Hospital: {name}',
+    'Update Operator: {name}' => 'Atualizar Operadora: {name}',
     
     'Update' => 'Atualizar',
     'Delete' => 'Remover',

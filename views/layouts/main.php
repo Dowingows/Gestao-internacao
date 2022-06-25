@@ -45,6 +45,10 @@ AppAsset::register($this);
                 ['label' => Yii::t('app','Procedures'), 'url' => ['/procedure/index']],
                 ['label' => Yii::t('app','Supplies'), 'url' => ['/supply/index']]
             ]],
+            ['label' => Yii::t('app','Entities'), 'items' => [
+                ['label' => Yii::t('app','Hospitals'), 'url' => ['/hospital/index']],
+                ['label' => Yii::t('app','Operators'), 'url' => ['/operator/index']],
+            ]],
             Yii::$app->user->isGuest ? (
                 ['label' => 'Login', 'url' => ['/site/login']]
             ) : (
