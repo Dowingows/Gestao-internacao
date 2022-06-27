@@ -12,77 +12,89 @@ use kartik\date\DatePicker;
 /* @var $form yii\widgets\ActiveForm */
 
 ?>
-<?php 
+<?php
 
 $fields = ['authorization_date', 'expiry_date_password', 'request_date'];
-foreach($fields as $field){
-    if(isset($model->{$field})) {
-        $model->{$field} = date('d/m/Y',strtotime($model->{$field}));
+foreach ($fields as $field) {
+    if (isset($model->{$field})) {
+        $model->{$field} = date('d/m/Y', strtotime($model->{$field}));
     }
 }
 
 ?>
 
+<style>
+    .highlight {
+        background-color: #E9E9E9;
+        padding: 20px;
+        border-radius: 5px;
+    }
+</style>
+
 <div class="diagnostic-form">
     <br />
     <h3>Guia de Serviço Profissional/Serviço Auxiliar de Diagnóstico e Terápia- SP/SADT</h3>
     <?php $form = ActiveForm::begin(); ?>
-    <div class="container ">
-        <br/>
-        <div class="row">
-            <div class="col">
-            <?php
-            $operators = \app\models\Operator::find()->all();
-            $list = ArrayHelper::map($operators, 'id', 'name');
+    <div class="container g-0 ">
+        <br />
+        <div class="highlight">
+            <div class="row">
+                <div class="col">
+                    <?php
+                    $operators = \app\models\Operator::find()->all();
+                    $list = ArrayHelper::map($operators, 'id', 'name');
 
-            print $form->field($model, 'operator_id')->widget(Select2::classname(), [
-                'data' => $list,
-                'language' => 'pt',
-                'options' => ['placeholder' => 'Selecione a operadora ...'],
-                'pluginOptions' => [
-                    'allowClear' => true
-                ]])->label('Operadora');
-            ?>
+                    print $form->field($model, 'operator_id')->widget(Select2::classname(), [
+                        'data' => $list,
+                        'language' => 'pt',
+                        'options' => ['placeholder' => 'Selecione a operadora ...'],
+                        'pluginOptions' => [
+                            'allowClear' => true
+                        ]
+                    ])->label('Operadora');
+                    ?>
+                </div>
+                <div class="col">
+                    <?= $form->field($model, 'number_form_main')->textInput(['maxlength' => true]) ?>
+                </div>
+                <div class="col">
+                    <?= $form->field($model, 'provider_form_number')->textInput(['maxlength' => true]) ?>
+                </div>
+                <div class="col">
+                    <?= $form->field($model, 'authorization_date')->widget(DatePicker::className(), [
+                        'convertFormat' => true,
+                        'pluginOptions' => [
+                            'autoclose' => true
+                        ]
+                    ]); ?>
+                </div>
             </div>
-            <div class="col">
-                <?= $form->field($model, 'number_form_main')->textInput(['maxlength' => true]) ?>
-            </div>
-            <div class="col">
-                <?= $form->field($model, 'provider_form_number')->textInput(['maxlength' => true]) ?>
-            </div>
-            <div class="col">
-                <?= $form->field($model, 'authorization_date')->widget(DatePicker::className(), [
-                    'convertFormat' => true,
-                    'pluginOptions' => [
-                        'autoclose' => true
-                ]]); ?>
+            <div class="row">
+                <div class="col">
+                    <?= $form->field($model, 'password')->textInput() ?>
+                </div>
+                <div class="col">
+                    <?= $form->field($model, 'expiry_date_password')->widget(DatePicker::className(), [
+                        'convertFormat' => true,
+                        'pluginOptions' => [
+                            'autoclose' => true
+                        ]
+                    ]); ?>
+                </div>
+                <div class="col">
+                    <?= $form->field($model, 'number_form_assigned_operator')->textInput(['maxlength' => true]) ?>
+                </div>
             </div>
         </div>
-        <div class="row">
-            <div class="col">
-                <?= $form->field($model, 'password')->textInput() ?>
-            </div>
-            <div class="col">
-                <?= $form->field($model, 'expiry_date_password')->widget(DatePicker::className(), [
-                    'convertFormat' => true,
-                    'pluginOptions' => [
-                        'autoclose' => true
-                ]]); ?>
-            </div>
-            <div class="col">
-                <?= $form->field($model, 'number_form_assigned_operator')->textInput(['maxlength' => true]) ?>
-            </div>
-        </div>
-
         <div class="row pt-3 pb-3">
             <div class="col">
                 <h3>Beneficiário</h3>
             </div>
         </div>
-        
-        <div class="row">
-            <div class="col">
-                <?php
+        <div class="highlight">
+            <div class="row">
+                <div class="col">
+                    <?php
                     $patients = \app\models\Patient::find()->all();
                     $list = ArrayHelper::map($patients, 'id', 'name');
 
@@ -92,10 +104,13 @@ foreach($fields as $field){
                         'options' => ['placeholder' => 'Selecione o paciente ...'],
                         'pluginOptions' => [
                             'allowClear' => true
-                        ]])->label('Paciente');
-                ?>
+                        ]
+                    ])->label('Paciente');
+                    ?>
+                </div>
             </div>
         </div>
+        
 
         <div class="row pt-3 pb-3">
             <div class="col">
@@ -103,9 +118,10 @@ foreach($fields as $field){
             </div>
         </div>
 
-        <div class="row">
-            <div class="col-12">
-                <?php
+        <div class="highlight">
+            <div class="row">
+                <div class="col-12">
+                    <?php
                     $hospitals = \app\models\Hospital::find()->all();
                     $list = ArrayHelper::map($hospitals, 'id', 'name');
 
@@ -115,11 +131,12 @@ foreach($fields as $field){
                         'options' => ['placeholder' => 'Selecione o hospital ...'],
                         'pluginOptions' => [
                             'allowClear' => true
-                        ]])->label('Contratado Solicitante');
-                ?>
-            </div>
-            <div class="col-12">
-                <?php
+                        ]
+                    ])->label('Contratado Solicitante');
+                    ?>
+                </div>
+                <div class="col-12">
+                    <?php
                     //enviando os profissionais para view
                     $profissionais_solicitantes = \app\models\Professional::find()->where(['type' => ['MC', 'MP']])->all();
                     $profissionais_solicitantes = ArrayHelper::map($profissionais_solicitantes, 'id', 'name');
@@ -130,42 +147,49 @@ foreach($fields as $field){
                         'options' => ['placeholder' => 'Selecione o profissional ...'],
                         'pluginOptions' => [
                             'allowClear' => true
-                        ]])->label('Profissionais');
+                        ]
+                    ])->label('Profissionais');
 
-                ?>
+                    ?>
+                </div>
             </div>
-        </div>                    
+        </div>
+
         <div class="row pt-3 pb-3">
             <div class="col">
                 <h3>Dados da Solicitação/Procedimentos e Exames Solicitados</h3>
             </div>
         </div>
-                    
-        <div class="row">
-            <div class="col">
-                <?= $form->field($model, 'service_character')->textInput(['maxlength' => true]) ?>
-            </div>
-            <div class="col">
-                <?= $form->field($model, 'request_date')->widget(DatePicker::className(), [
-                    'convertFormat' => true,
-                    'pluginOptions' => [
-                        'autoclose' => true
-                ]]); ?>
-            </div>
-            <div class="col">
-                <?= $form->field($model, 'clinical_indication')->textInput(['maxlength' => true]) ?>
-            </div>
-        </div>
-        
-        <div class="row pt-3 pb-3">
-            <div class="col">
-                <h3>Dados do Contratado Solicitante</h3>
-            </div>
-        </div>
 
-        <div class="row">
-            <div class="col">
-                <?php
+        <div class="highlight">
+            <div class="row">
+                <div class="col">
+                    <?= $form->field($model, 'service_character')->textInput(['maxlength' => true]) ?>
+                </div>
+                <div class="col">
+                    <?= $form->field($model, 'request_date')->widget(DatePicker::className(), [
+                        'convertFormat' => true,
+                        'pluginOptions' => [
+                            'autoclose' => true
+                        ]
+                    ]); ?>
+                </div>
+                <div class="col">
+                    <?= $form->field($model, 'clinical_indication')->textInput(['maxlength' => true]) ?>
+                </div>
+            </div>
+        </div>
+       
+            <div class="row pt-3 pb-3">
+                <div class="col">
+                    <h3>Dados do Contratado Solicitante</h3>
+                </div>
+            </div>
+
+        <div class="highlight">
+            <div class="row">
+                <div class="col">
+                    <?php
                     $hospitals = \app\models\Hospital::find()->all();
                     $list = ArrayHelper::map($hospitals, 'id', 'name');
 
@@ -175,53 +199,52 @@ foreach($fields as $field){
                         'options' => ['placeholder' => 'Selecione o hospital ...'],
                         'pluginOptions' => [
                             'allowClear' => true
-                        ]])->label('Contratado Solicitante');
-                ?>
+                        ]
+                    ])->label('Contratado Solicitante');
+                    ?>
+                </div>
             </div>
         </div>
-        
         <div class="row pt-3 pb-3">
             <div class="col">
                 <h3>Dados do Atendimento</h3>
             </div>
         </div>
 
-        
 
-                              
+
+        <div class="highlight">
+            <div class="row">
+                <div class="col">
+                    <?= $form->field($model, 'service_type')->textInput(['maxlength' => true]) ?>
+                </div>
+                <div class="col">
+                    <?= $form->field($model, 'accident_indication')->textInput(['maxlength' => true]) ?>
+                </div>
+                <div class="col">
+                    <?= $form->field($model, 'type_medical_appointment')->textInput(['maxlength' => true]) ?>
+                </div>
+                <div class="col">
+                    <?= $form->field($model, 'reason_closing_service')->textInput(['maxlength' => true]) ?>
+                </div>
+            </div>
         <div class="row">
             <div class="col">
-                <?= $form->field($model, 'service_type')->textInput(['maxlength' => true]) ?>
-            </div>
-            <div class="col">
-                <?= $form->field($model, 'accident_indication')->textInput(['maxlength' => true]) ?>
-            </div>
-            <div class="col">
-                <?= $form->field($model, 'type_medical_appointment')->textInput(['maxlength' => true]) ?>
-            </div>
-            <div class="col">
-                <?= $form->field($model, 'reason_closing_service')->textInput(['maxlength' => true]) ?> 
-            </div>
-        </div>                            
-
-     
-                            
-        <div class="row">
-            <div class="col">
-                <?= $form->field($model, 'note')->textarea(['rows' => 6]) ?> 
+                <?= $form->field($model, 'note')->textarea(['rows' => 6]) ?>
             </div>
         </div>
-        
-        <!-- TODO: CHECK IF IT IS NEEDED TO REMOVE THESE FIELDS IN MIGRATIONS AND MODEL                      -->
-        <?= $form->field($model, 'ans_code')->textInput(['maxlength' => true]) ?>
-        <?= $form->field($model, 'contractor_name')->textInput(['maxlength' => true]) ?>
-        <?= $form->field($model, 'contracted_operator_code')->textInput(['maxlength' => true]) ?>
-        <?= $form->field($model, 'executor_contractor_name')->textInput(['maxlength' => true]) ?>
-        <?= $form->field($model, 'cod_operator_executing')->textInput(['maxlength' => true]) ?>
+        </div>
 
-       
-         <br />
-        
+        <!-- TODO: CHECK IF IT IS NEEDED TO REMOVE THESE FIELDS IN MIGRATIONS AND MODEL                      -->
+        <?php $form->field($model, 'ans_code')->textInput(['maxlength' => true]) ?>
+        <?php $form->field($model, 'contractor_name')->textInput(['maxlength' => true]) ?>
+        <?php $form->field($model, 'contracted_operator_code')->textInput(['maxlength' => true]) ?>
+        <?php $form->field($model, 'executor_contractor_name')->textInput(['maxlength' => true]) ?>
+        <?php $form->field($model, 'cod_operator_executing')->textInput(['maxlength' => true]) ?>
+
+
+        <br />
+
         <div class="form-group">
             <?= Html::submitButton(Yii::t('app', 'Save'), ['class' => 'btn btn-success']) ?>
         </div>

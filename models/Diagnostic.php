@@ -87,7 +87,7 @@ class Diagnostic extends \yii\db\ActiveRecord
             'cod_operator_executing' => 'Codigo Operador Executante',
             'service_type' => 'Tipo de Atendimento',
             'type_medical_appointment' => 'Tipo Consulta',
-            'provider_form_number' => 'Número da guia do prestador',
+            'provider_form_number' => 'Nº Guia do prestador',
             'reason_closing_service' => 'Motivo de encerramento do Atendimento',
             'contractor_applicant_id' => 'Contratado Solicitante',
             'contractor_executor_id' => 'Contratado Executante',
