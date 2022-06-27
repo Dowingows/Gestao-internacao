@@ -27,17 +27,21 @@ AppAsset::register($this);
 
 <header>
     <?php
+    $navColor = getenv('PROD') == null || getenv('PROD') != 'true' ? 'danger' : 'dark';
     NavBar::begin([
         'brandLabel' => getenv('APP_NAME'),
         'brandUrl' => Yii::$app->homeUrl,
         'options' => [
-            'class' => 'navbar navbar-expand-md navbar-dark bg-dark fixed-top',
+            'class' => "navbar navbar-expand-md navbar-dark bg-{$navColor} fixed-top",
         ],
     ]);
     echo Nav::widget([
         'options' => ['class' => 'navbar-nav'],
         'items' => [
-            ['label' => Yii::t('app','Home'), 'url' => ['/site/index']],
+            ['label' => Yii::t('app','Forms'), 'items' => [
+                ['label' => Yii::t('app','Diagnostics'), 'url' => ['/diagnostic/index']],
+
+            ]],
             ['label' => Yii::t('app','Tables'), 'items' => [
                 ['label' => Yii::t('app','Professionals'), 'url' => ['/professional/index']],
                 ['label' => Yii::t('app','Patients'), 'url' => ['/patient/index']],

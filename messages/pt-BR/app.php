@@ -13,13 +13,17 @@ return [
     'Hospitals' => 'Hospitais',
     'Operators' => 'Operadoras',
     'Entities' => 'Entidades',
+    'Forms' => 'Fichas',
+    'Diagnostics' => 'Diagnósticos',
+
     'Create Procedure' => 'Cadastrar Procedimento',
     'Create Operator' => 'Cadastrar Operadora',
     'Create Hospital' => 'Cadastrar Hospital',
     'Create Medicine' => 'Cadastrar Medicamento',
     'Create Patient' => 'Cadastrar Paciente',    
     'Create Professional' => 'Cadastrar Profissional',
-    'Create Supply' => 'Cadastrar Material',    
+    'Create Supply' => 'Cadastrar Material',  
+    'Create Diagnostic' => 'Cadastrar Diagnóstico',    
     
     'Are you sure you want to delete this item?' => 'Deseja realmente excluir este item?',
     
@@ -30,6 +34,7 @@ return [
     'Update Supply: {name}' => 'Atualizar Material: {name}',
     'Update Hospital: {name}' => 'Atualizar Hospital: {name}',
     'Update Operator: {name}' => 'Atualizar Operadora: {name}',
+    'Update Diagnostic: {name}' => 'Atualizar Diagnóstico: {name}',
     
     'Update' => 'Atualizar',
     'Delete' => 'Remover',
