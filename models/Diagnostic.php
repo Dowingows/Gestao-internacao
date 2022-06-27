@@ -94,4 +94,15 @@ class Diagnostic extends \yii\db\ActiveRecord
             'note' => 'Observação',
         ];
     }
+
+    public function beforeSave($insert) {
+        $fields = ['authorization_date', 'expiry_date_password', 'request_date'];
+        foreach($fields as $field){
+            if(!empty($this->{$field})){
+                $this->{$field} = implode("-", array_reverse(explode("/", $this->{$field})));
+            }  
+        }
+         
+        return parent::beforeSave($insert);
+    }
 }
