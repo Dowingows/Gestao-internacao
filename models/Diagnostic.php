@@ -14,6 +14,7 @@ use Yii;
  * @property string|null $number_form_main
  * @property string|null $authorization_date
  * @property string|null $expiry_date_password
+ * @property string|null $password
  * @property string|null $number_form_assigned_operator
  * @property int $patient_id
  * @property int $professional_id
@@ -51,7 +52,7 @@ class Diagnostic extends \yii\db\ActiveRecord
             [['operator_id', 'patient_id', 'professional_id', 'contractor_applicant_id', 'contractor_executor_id'], 'required'],
             [['operator_id', 'patient_id', 'professional_id', 'contractor_applicant_id', 'contractor_executor_id'], 'default', 'value' => null],
             [['operator_id', 'patient_id', 'professional_id', 'contractor_applicant_id', 'contractor_executor_id'], 'integer'],
-            [['authorization_date', 'expiry_date_password', 'request_date'], 'safe'],
+            [['authorization_date', 'expiry_date_password', 'password','request_date'], 'safe'],
             [['note'], 'string'],
             [['accident_indication', 'ans_code', 'service_character', 'contractor_name', 'contracted_operator_code', 'cod_operator_executing', 'service_type', 'type_medical_appointment', 'provider_form_number', 'reason_closing_service'], 'string', 'max' => 50],
             [['number_form_main', 'number_form_assigned_operator'], 'string', 'max' => 11],
@@ -72,6 +73,7 @@ class Diagnostic extends \yii\db\ActiveRecord
             'ans_code' => 'Registro ANS',
             'number_form_main' => 'Nº Guia Principal',
             'authorization_date' => 'Data de Autorizacão',
+            'password' => 'Senha',
             'expiry_date_password' => 'Data de Validade da Senha',
             'number_form_assigned_operator' => 'Nº Guia Atribuido pela Operadora',
             'patient_id' => 'Paciente',
