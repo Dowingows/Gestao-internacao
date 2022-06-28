@@ -77,7 +77,7 @@ class Diagnostic extends \yii\db\ActiveRecord
             'expiry_date_password' => 'Data de Validade da Senha',
             'number_form_assigned_operator' => 'Nº Guia Atribuido pela Operadora',
             'patient_id' => 'Paciente',
-            'professional_id' => 'Professional',
+            'professional_id' => 'Profissional',
             'service_character' => 'Caráter de Atendimento',
             'request_date' => 'Data de Solicitacão',
             'clinical_indication' => 'Indicacão Clínica',

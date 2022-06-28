@@ -42,7 +42,7 @@ class Operator extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'name' => 'Nome',
-            'ans_code' => 'Código ANS',
+            'ans_code' => 'Registro ANS',
             'logo' => 'Logo',
         ];
     }
