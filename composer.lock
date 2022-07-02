@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "b786d79507af45138d4d8701e9308698",
+    "content-hash": "4cabb689c9562180faa533e4ba24a8af",
     "packages": [
         {
             "name": "bower-asset/bootstrap",
@@ -6205,7 +6205,7 @@
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
-        "php": "^8.0.0"
+        "php": "8.0.*"
     },
     "platform-dev": [],
     "plugin-api-version": "2.3.0"
