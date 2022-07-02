@@ -12,6 +12,7 @@ services:
     user: root
     build: ./
     volumes:
+      - ./assets:/var/www/assets
       - ./config:/var/www/config
       - ./views:/var/www/views
       - ./models:/var/www/models
@@ -22,6 +23,7 @@ services:
       - ./composer.json:/var/www/composer.json
       - ./composer.lock:/var/www/composer.lock
       - ./web/index.php:/var/www/html/index.php
+      - ./web/css/custom_view.css:/var/www/html/css/custom_view.css
       - ./.env:/var/www/.env
     ports:
       - '8000:80'
