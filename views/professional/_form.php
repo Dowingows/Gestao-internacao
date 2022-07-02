@@ -25,7 +25,7 @@ use app\Models\Professional;
     <?= $form->field($model, 'cbo_code')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'type')->dropDownList(Professional::getTypesList(), ['empty'=>'selecione um tipo de profissional']) ?>
-
+    <br/>
  
     <div class="form-group">
         <?= Html::submitButton(Yii::t('app', 'Save'), ['class' => 'btn btn-success']) ?>

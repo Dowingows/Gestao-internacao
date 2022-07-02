@@ -4,6 +4,7 @@ namespace app\controllers;
 
 use app\models\Diagnostic;
 use app\models\DiagnosticSearch;
+use Exception;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -22,7 +23,7 @@ class DiagnosticController extends Controller
             parent::behaviors(),
             [
                 'verbs' => [
-                    'class' => VerbFilter::className(),
+                    'class' => VerbFilter::class,
                     'actions' => [
                         'delete' => ['POST'],
                     ],
@@ -68,9 +69,29 @@ class DiagnosticController extends Controller
     public function actionCreate()
     {
         $model = new Diagnostic();
-
+        
         if ($this->request->isPost) {
             if ($model->load($this->request->post()) && $model->save()) {
+                $diagnosticProcedure = \app\models\Model::createMultiple(\app\models\DiagnosticProcedure::class);
+                \app\models\Model::loadMultiple($diagnosticProcedure, $this->request->post());
+                $transaction = \Yii::$app->db->beginTransaction();
+                try {
+                    if ($flag = $model->save(false)) {
+                        foreach ($diagnosticProcedure as $procedureData) {
+                           
+                            $procedureData->diagnostic_id = $model->id;
+                            if (!($flag = $procedureData->save(false))) {
+                                $transaction->rollBack();
+                                break;
+                            }
+                        }
+                    }
+                    if ($flag) {
+                        $transaction->commit();
+                    }
+                } catch (Exception $e) {
+                    $transaction->rollBack();
+                }
                 return $this->redirect(['view', 'id' => $model->id]);
             }
         } else {

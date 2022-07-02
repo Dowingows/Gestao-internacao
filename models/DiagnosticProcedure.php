@@ -44,11 +44,20 @@ class DiagnosticProcedure extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'diagnostic_id' => 'Diagnostic ID',
-            'procedure_id' => 'Procedure ID',
-            'quantity_authorized' => 'Quantity Authorized',
-            'quantity_requested' => 'Quantity Requested',
-            'procedure_price' => 'Procedure Price',
+            'diagnostic_id' => 'Diagnóstico',
+            'procedure_id' => 'Procedimento',
+            'quantity_authorized' => 'Quantidade Autorizada',
+            'quantity_requested' => 'Quantidade Solicitada',
+            'procedure_price' => 'Preço',
         ];
     }
+
+    public function beforeSave($insert)
+    {
+        if(!empty($this->procedure_id)){
+            $this->procedure_price = Procedure::findOne($this->procedure_id)->price;
+        }
+        return parent::beforeSave($insert);
+    }
+
 }

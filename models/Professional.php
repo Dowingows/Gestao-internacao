@@ -4,25 +4,6 @@ namespace app\models;
 
 use Yii;
 
-enum ProfessionalType : string
-{
-    case CLINICAL = 'MC';
-    case PSYCHIATRIC = 'MP' ;
-    case THERAPIST = 'TERA';
-    case PSYCHOLOGIST = 'PSI';
-    
-    public function label(): string
-    {
-        return match($this) 
-        {
-            ProfessionalType::CLINICAL => 'Médico Clínico',   
-            ProfessionalType::PSYCHIATRIC => 'Médico Psiquiatra',   
-            ProfessionalType::THERAPIST => 'Terapeuta',   
-            ProfessionalType::PSYCHOLOGIST => 'Psicólogo',   
-        };
-    }
-}
-
 /**
  * This is the model class for table "professional".
  *
@@ -48,19 +29,18 @@ class Professional extends \yii\db\ActiveRecord
     public static function  getTypesList()
     {
         $list = [
-            ProfessionalType::CLINICAL->value=> ProfessionalType::CLINICAL->label(), 
-            ProfessionalType::PSYCHIATRIC->value=> ProfessionalType::PSYCHIATRIC->label(), 
-            ProfessionalType::PSYCHOLOGIST->value=> ProfessionalType::PSYCHOLOGIST->label(), 
-            ProfessionalType::THERAPIST->value=> ProfessionalType::THERAPIST->label(), 
+            'MC' => 'Médico Clínico', 
+            'MP' => 'Médico Psiquiatra', 
+            'TERA' => 'Médico Psiquiatra', 
+            'PSI' => 'Médico Psiquiatra' 
         ];
 
         return $list;
     }
 
-
     public static function getTypeLabel(string $value){
-        $enum = ProfessionalType::tryFrom($value);
-        return $enum != null  ? $enum->label() : 'desconhecido';
+        $enum = Professional::getTypesList();
+        return isset($enum[$value])  ? $enum[$value] : 'desconhecido';
     }
 
     /**
