@@ -31,8 +31,8 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
         ]) ?>
     </p>
-
-    <div class="rp-content scrolly">
+        <div class="scrolly">
+    <div class="rp-content ">
         
         <div class="rp-row g-0">
             <div class="rp-field rp-field-p-10">
@@ -390,5 +390,5 @@ $this->params['breadcrumbs'][] = $this->title;
             última modificação
         </div>
     </div>
-
+        </div>
 </div>
