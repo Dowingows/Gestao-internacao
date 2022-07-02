@@ -105,4 +105,13 @@ class Diagnostic extends \yii\db\ActiveRecord
          
         return parent::beforeSave($insert);
     }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getDiagnosticProcedure()
+    {
+        return $this->hasMany(DiagnosticProcedure::class, ['diagnostic_id' => 'id']);
+    }
+
 }

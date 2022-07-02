@@ -189,29 +189,32 @@ $procedures = ArrayHelper::map($procedures, 'id', 'procedure_code');
                 <h3>Procedimentos ou Itens Assistenciais Solicitados</h3>
             </div>
         </div>
-        <?php
-
-        $diagnosticProcedure = [new app\models\DiagnosticProcedure()];
-
-        DynamicFormWidget::begin([
-            'widgetContainer' => 'dynamicform_wrapper', // required: only alphanumeric characters plus "_" [A-Za-z0-9_]
-            'widgetBody' => '.container-items', // required: css class selector
-            'widgetItem' => '.item', // required: css class
-            'limit' => 4, // the maximum times, an element can be cloned (default 999)
-            'min' => 0, // 0 or 1 (default 1)
-            'insertButton' => '.add-item', // css class
-            'deleteButton' => '.remove-item', // css class
-            'model' => $diagnosticProcedure[0],
-            'formId' => 'dynamic-form',
-            'formFields' => [
-                'quantity_requested',
-                'quantity_authorized',
-                'procedure_price',
-                'procedure_id'
-            ],
-        ]);
-        ?>
+        
         <div class="highlight">
+            <div class="row">
+            <?php
+
+                $diagnosticProcedure = empty($model->diagnosticProcedure) ? [new app\models\DiagnosticProcedure()] : $model->diagnosticProcedure;
+
+                DynamicFormWidget::begin([
+                    'widgetContainer' => 'dynamicform_wrapper', // required: only alphanumeric characters plus "_" [A-Za-z0-9_]
+                    'widgetBody' => '.container-items', // required: css class selector
+                    'widgetItem' => '.item', // required: css class
+                    'limit' => 4, // the maximum times, an element can be cloned (default 999)
+                    'min' => 0, // 0 or 1 (default 1)
+                    'insertButton' => '.add-item', // css class
+                    'deleteButton' => '.remove-item', // css class
+                    'model' => $diagnosticProcedure[0],
+                    'formId' => 'dynamic-form',
+                    'formFields' => [
+                        'quantity_requested',
+                        'quantity_authorized',
+                        'procedure_price',
+                        'procedure_id'
+                    ],
+                ]);
+            ?>
+
             <div class="panel-heading pb-3">
                 <button type="button" class="pull-right add-item btn btn-success btn-xs"><i class="fa fa-plus"></i>
                     Adicionar Procedimento
@@ -224,11 +227,6 @@ $procedures = ArrayHelper::map($procedures, 'id', 'procedure_code');
                     <div class="item panel panel-default">
                         <div class="panel-body">
                             <div class="row">
-                                <?php
-                                    if (!$procedureExecuted->isNewRecord) {
-                                        echo Html::activeHiddenInput($procedureExecuted, "[{$index}]id");
-                                    }
-                                ?>
                                 <div class="col-5">
                                     <?= $form->field($procedureExecuted, "[{$index}]procedure_id")->dropDownList($procedures, ['prompt' => 'Selecione']) ?>
                                 </div>
@@ -242,13 +240,15 @@ $procedures = ArrayHelper::map($procedures, 'id', 'procedure_code');
                                     <button type="button" class="pull-right remove-item btn btn-danger "><i class="fa fa-trash"></i></button>
                                 </div>
                             </div>
-                            
                         </div>
                     </div>
             </div>
-        <?php endforeach; ?>
-        <?php DynamicFormWidget::end(); ?>
 
+            <?php endforeach; ?>
+            <?php DynamicFormWidget::end(); ?>
+            </div>
+        </div>
+                    
         <div class="row pt-3 pb-3">
             <div class="col">
                 <h3>Dados do Contratado Solicitante</h3>

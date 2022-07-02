@@ -3,11 +3,13 @@
 namespace app\controllers;
 
 use app\models\Diagnostic;
+use app\models\DiagnosticProcedure;
 use app\models\DiagnosticSearch;
 use Exception;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\helpers\ArrayHelper;
 
 /**
  * DiagnosticController implements the CRUD actions for Diagnostic model.
@@ -113,8 +115,34 @@ class DiagnosticController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+        $diagnosticProcedure = $model->diagnosticProcedure;
 
         if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
+            
+            
+            $diagnosticProcedure = \app\models\Model::createMultiple(DiagnosticProcedure::class, $diagnosticProcedure);
+            \app\models\Model::loadMultiple($diagnosticProcedure, $this->request->post());
+            
+
+            $transaction = \Yii::$app->db->beginTransaction();
+            DiagnosticProcedure::deleteAll(['diagnostic_id' => $model->id]);
+            try {
+                if ($flag = $model->save(false)) {
+                    foreach ($diagnosticProcedure as $procedureData) {
+                        $procedureData->diagnostic_id = $model->id;
+                        if (!($flag = $procedureData->save(false))) {
+                            $transaction->rollBack();  
+                            break;
+                        }
+                    }
+                }
+                if ($flag) {
+                    $transaction->commit();
+                }
+            } catch (Exception $e) {
+                print_r($e);die('exception');
+                $transaction->rollBack();
+            }
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
