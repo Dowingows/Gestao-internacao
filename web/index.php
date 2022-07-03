@@ -18,5 +18,6 @@ if(getenv('PROD') == null || getenv('PROD') != 'true'){
 require __DIR__ . '/../vendor/yiisoft/yii2/Yii.php';
 
 $config = require __DIR__ . '/../config/web.php';
-
-(new yii\web\Application($config))->run();
+$application = new yii\web\Application($config);
+date_default_timezone_set($application->timeZone); 
+$application->run();
