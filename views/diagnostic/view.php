@@ -72,7 +72,8 @@ $this->title = Yii::t('app', 'View Diagnostic: {name}', [
                 <div class="rp-field rp-field-p-15">
                     <div class="rp-field-label">4 - Data da autorização</div>
                     <div class="rp-field-value">
-                        <?= $model->authorization_date ?>
+                        <?= Yii::$app->formatter->asDateTime($model->authorization_date, 'php:d/m/Y') ?>
+
                     </div>
                 </div>
 
@@ -85,7 +86,7 @@ $this->title = Yii::t('app', 'View Diagnostic: {name}', [
                 <div class="rp-field " style="width:180px">
                     <div class="rp-field-label">6 - Data de validade da Senha</div>
                     <div class="rp-field-value">
-                        <?= $model->expiry_date_password ?>
+                        <?= Yii::$app->formatter->asDateTime($model->expiry_date_password, 'php:d/m/Y') ?>
                     </div>
                 </div>
 
@@ -110,10 +111,10 @@ $this->title = Yii::t('app', 'View Diagnostic: {name}', [
                         <?= $model->professional->council ?>
                     </div>
                 </div>
-                <div class="rp-field rp-field-p-10" style="width:155px" >
+                <div class="rp-field rp-field-p-10" style="width:155px">
                     <div class="rp-field-label">17 - Numero do conselho</div>
                     <div class="rp-field-value">
-                    <?= $model->professional->council_number ?>
+                        <?= $model->professional->council_number ?>
                     </div>
                 </div>
                 <div class="rp-field rp-field-p-8">
@@ -125,7 +126,7 @@ $this->title = Yii::t('app', 'View Diagnostic: {name}', [
                 <div class="rp-field rp-field-p-10">
                     <div class="rp-field-label">19 - Código CBO</div>
                     <div class="rp-field-value">
-                    <?= $model->professional->cbo_code ?>
+                        <?= $model->professional->cbo_code ?>
                     </div>
                 </div>
                 <div class="rp-field rp-field-p-25" style="width: 260px">
@@ -149,7 +150,8 @@ $this->title = Yii::t('app', 'View Diagnostic: {name}', [
                 <div class="rp-field rp-field-p-20">
                     <div class="rp-field-label">22 - Data da solicitação</div>
                     <div class="rp-field-value">
-                    <?= $model->request_date ?>
+
+                        <?= Yii::$app->formatter->asDateTime($model->request_date, 'php:d/m/Y') ?>
                     </div>
                 </div>
                 <div class="rp-field " style="width: 692px">
@@ -174,18 +176,18 @@ $this->title = Yii::t('app', 'View Diagnostic: {name}', [
                             <td width="20%">Valor Unit</td>
                         </tr>
 
-                        <?php foreach ($model->diagnosticProcedure as $key => $diagProcedure): ?>
-                        <tr>
-                            <td><span class="text-tiny">
-                                    <?= $key + 1 ?></span>
-                                - <?= $diagProcedure->procedure->table ?>
-                            </td>
-                            <td><?= $diagProcedure->procedure->procedure_code ?></td>
-                            <td><?= $diagProcedure->procedure->description ?></td>
-                            <td><?= $diagProcedure->quantity_requested ?></td>
-                            <td><?= $diagProcedure->quantity_authorized ?></td>
-                            <td><?= formatMoney($diagProcedure->procedure_price) ?></td>
-                        </tr>
+                        <?php foreach ($model->diagnosticProcedure as $key => $diagProcedure) : ?>
+                            <tr>
+                                <td><span class="text-tiny">
+                                        <?= $key + 1 ?></span>
+                                    - <?= $diagProcedure->procedure->table ?>
+                                </td>
+                                <td><?= $diagProcedure->procedure->procedure_code ?></td>
+                                <td><?= $diagProcedure->procedure->description ?></td>
+                                <td><?= $diagProcedure->quantity_requested ?></td>
+                                <td><?= $diagProcedure->quantity_authorized ?></td>
+                                <td><?= formatMoney($diagProcedure->procedure_price) ?></td>
+                            </tr>
                         <?php endforeach; ?>
                     </table>
                 </div>
@@ -210,7 +212,7 @@ $this->title = Yii::t('app', 'View Diagnostic: {name}', [
                 <div class="rp-field  " style="width: 230px">
                     <div class="rp-field-label">31 - Código CNES</div>
                     <div class="rp-field-value">
-                        
+
                     </div>
                 </div>
             </div>
