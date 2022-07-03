@@ -41,5 +41,7 @@ return [
     'Update' => 'Atualizar',
     'Delete' => 'Remover',
     'Search' => 'Buscar',
-    'Save' => 'Salvar'
+    'Save' => 'Salvar',
+
+    'The requested page does not exist.' => 'A página requisitada não existe.'
 ];

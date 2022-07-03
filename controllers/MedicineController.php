@@ -128,7 +128,7 @@ class MedicineController extends Controller
         if (($model = Medicine::findOne(['id' => $id])) !== null) {
             return $model;
         }
-
+        
         throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
     }
 }

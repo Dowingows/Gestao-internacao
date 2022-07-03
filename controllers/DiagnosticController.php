@@ -160,7 +160,9 @@ class DiagnosticController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        $model = $this->findModel($id);
+        $model->deleted_at =  new \yii\db\Expression('NOW()');
+        $model->save();
 
         return $this->redirect(['index']);
     }
@@ -178,6 +180,6 @@ class DiagnosticController extends Controller
             return $model;
         }
 
-        throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
+        throw new NotFoundHttpException(\Yii::t('app', 'The requested page does not exist.'));
     }
 }
