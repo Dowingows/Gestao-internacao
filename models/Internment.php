@@ -130,4 +130,56 @@ class Internment extends \yii\db\ActiveRecord
          
         return parent::beforeSave($insert);
     }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getOperator()
+    {
+        return $this->hasOne(Operator::class, ['id' => 'operator_id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getPatient()
+    {
+        return $this->hasOne(Patient::class, ['id' => 'patient_id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getProfessional()
+    {
+        return $this->hasOne(Professional::class, ['id' => 'professional_id']);
+    }
+
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getHospitalApplicant()
+    {
+        return $this->hasOne(Hospital::class, ['id' => 'hospital_applicant_id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getHospitalRequested()
+    {
+        return $this->hasOne(Hospital::class, ['id' => 'hospital_requested_id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getHospitalAuthorized()
+    {
+        return $this->hasOne(Hospital::class, ['id' => 'hospital_authorized_id']);
+    }
+    
+
+    
 }

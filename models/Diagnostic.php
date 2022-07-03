@@ -151,14 +151,6 @@ class Diagnostic extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getContratadoExecutante()
-    {
-        return $this->hasOne(Hospital::class, ['id' => 'contratado_executante_id']);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
     public function getContractorExecutor()
     {
         return $this->hasOne(Hospital::class, ['id' => 'contractor_executor_id']);
