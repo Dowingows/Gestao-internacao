@@ -37,6 +37,8 @@ use yii\db\Expression;
  */
 class Diagnostic extends \yii\db\ActiveRecord
 {
+    public $operator_name;
+    public $patient_name;
 
     public function behaviors()
     {
@@ -83,6 +85,7 @@ class Diagnostic extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'operator_id' => 'Operadora',
+            'operator_name' => 'Operadora',
             'accident_indication' => 'Indicador de Acidente',
             'ans_code' => 'Registro ANS',
             'number_form_main' => 'Nº Guia Principal',
@@ -91,6 +94,7 @@ class Diagnostic extends \yii\db\ActiveRecord
             'expiry_date_password' => 'Data de Validade da Senha',
             'number_form_assigned_operator' => 'Nº Guia Atribuido pela Operadora',
             'patient_id' => 'Paciente',
+            'patient_name' => 'Paciente',
             'professional_id' => 'Profissional',
             'service_character' => 'Caráter de Atendimento',
             'request_date' => 'Data de Solicitacão',

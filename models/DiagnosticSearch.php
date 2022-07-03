@@ -18,7 +18,8 @@ class DiagnosticSearch extends Diagnostic
     {
         return [
             [['id', 'operator_id', 'patient_id', 'professional_id', 'contractor_applicant_id', 'contractor_executor_id'], 'integer'],
-            [['accident_indication', 'ans_code', 'number_form_main', 'authorization_date', 'expiry_date_password', 'number_form_assigned_operator', 'service_character', 'request_date', 'clinical_indication', 'contractor_name', 'contracted_operator_code', 'executor_contractor_name', 'cod_operator_executing', 'service_type', 'type_medical_appointment', 'provider_form_number', 'reason_closing_service', 'note'], 'safe'],
+            [['authorization_date'],  'date'],
+            [['accident_indication', 'ans_code', 'number_form_main', 'authorization_date', 'expiry_date_password', 'number_form_assigned_operator', 'service_character', 'request_date', 'clinical_indication', 'contractor_name', 'contracted_operator_code', 'operator_name','patient_name', 'executor_contractor_name', 'cod_operator_executing', 'service_type', 'type_medical_appointment', 'provider_form_number', 'reason_closing_service', 'note'], 'safe'],
         ];
     }
 
@@ -41,12 +42,30 @@ class DiagnosticSearch extends Diagnostic
     public function search($params)
     {
         $query = Diagnostic::find();
-
+        $query->joinWith(['operator']);
         // add conditions that should always apply here
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);
+
+        // Important: here is how we set up the sorting
+        // The key is the attribute name on our "TourSearch" instance
+        $dataProvider->sort->attributes['operator_name'] = [
+            // The tables are the ones our relation are configured to
+            // in my case they are prefixed with "tbl_"
+            'asc' => ['operator.name' => SORT_ASC],
+            'desc' => ['operator.name' => SORT_DESC],
+        ];
+        // Important: here is how we set up the sorting
+        // The key is the attribute name on our "TourSearch" instance
+        $dataProvider->sort->attributes['patient_name'] = [
+            // The tables are the ones our relation are configured to
+            // in my case they are prefixed with "tbl_"
+            'asc' => ['patient.name' => SORT_ASC],
+            'desc' => ['patient.name' => SORT_DESC],
+        ];
+
 
         $this->load($params);
 
@@ -55,12 +74,14 @@ class DiagnosticSearch extends Diagnostic
             // $query->where('0=1');
             return $dataProvider;
         }
+        
+       
 
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
             'operator_id' => $this->operator_id,
-            'authorization_date' => $this->authorization_date,
+            'authorization_date' =>  implode("-", array_reverse(explode("/", $this->authorization_date))) ,
             'expiry_date_password' => $this->expiry_date_password,
             'patient_id' => $this->patient_id,
             'professional_id' => $this->professional_id,
@@ -83,7 +104,10 @@ class DiagnosticSearch extends Diagnostic
             ->andFilterWhere(['ilike', 'type_medical_appointment', $this->type_medical_appointment])
             ->andFilterWhere(['ilike', 'provider_form_number', $this->provider_form_number])
             ->andFilterWhere(['ilike', 'reason_closing_service', $this->reason_closing_service])
-            ->andFilterWhere(['ilike', 'note', $this->note]);
+            ->andFilterWhere(['ilike', 'note', $this->note])
+            ->andFilterWhere(['like', 'operator.name', $this->operator_name])
+            ->andFilterWhere(['like', 'patient.name', $this->operator_name])
+            ;
 
         return $dataProvider;
     }

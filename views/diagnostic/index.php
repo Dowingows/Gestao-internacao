@@ -29,26 +29,20 @@ $this->params['breadcrumbs'][] = $this->title;
         'filterModel' => $searchModel,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
-            'number_form_assigned_operator',
-            [
-                'label' => 'Operadora',
-                'value' => function ($d) {
-                    return $d->operator->name;
-                }
-            ],
-            [
-                'label' => 'Paciente',
-                'value' => function ($model) {
-                    return $model->patient->name;
-                }
-            ],
             'number_form_main',
             [
-                'label' => 'Data de autorização',
-                'value' => function ($model) {
-                    return Yii::$app->formatter->asDateTime($model->authorization_date, 'php:d/m/Y');
-                }
+                'attribute' => 'operator_name',
+                'value' => 'operator.name'
             ],
+            [
+                'attribute' => 'patient_name',
+                'value' => 'patient.name'
+            ],
+            [
+
+                'attribute' => 'authorization_date',
+                'format' => ['date', 'php:d/m/Y']
+            ], 
             ['class' => 'yii\grid\ActionColumn'],
         ],
     ]); ?>
