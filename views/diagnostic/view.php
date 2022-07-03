@@ -35,7 +35,7 @@ $this->title = Yii::t('app', 'View Diagnostic: {name}', [
 <div class="diagnostic-view">
 
     <h1><?= Html::encode($this->title) ?></h1>
-
+    
     <p>
         <?= Html::a(Yii::t('app', 'Update'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
         <?= Html::a(Yii::t('app', 'Delete'), ['delete', 'id' => $model->id], [
@@ -410,8 +410,9 @@ $this->title = Yii::t('app', 'View Diagnostic: {name}', [
                 </div>
             </div>
             <div class="content-bottom">
-                Criado em <?= date('d/m/Y H:i:s', strtotime($model->created_at)); ?>,
-                última modificação <?= date('d/m/Y H:i:s', strtotime($model->updated_at)); ?>
+                Criado em <?= Yii::$app->formatter->asDatetime($model->created_at, 'php:d/m/Y, Y, H:i:s') ?>,
+              
+                última modificação <?= Yii::$app->formatter->asDatetime($model->updated_at, 'php:d/m/Y, Y, H:i:s') ?>
             </div>
         </div>
     </div>
