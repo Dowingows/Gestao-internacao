@@ -115,6 +115,11 @@ class DiagnosticController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+        
+        if(!empty($model->deleted_at)){
+            return $this->redirect(['index']);
+        }
+
         $diagnosticProcedure = $model->diagnosticProcedure;
 
         if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
