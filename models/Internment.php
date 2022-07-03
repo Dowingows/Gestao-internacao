@@ -191,6 +191,14 @@ class Internment extends \yii\db\ActiveRecord
     {
         return $this->hasOne(Hospital::class, ['id' => 'hospital_authorized_id']);
     }
+
+     /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getInternmentProcedure()
+    {
+        return $this->hasOne(InternmentProcedure::class, ['internment_id' => 'id']);
+    }
     
 
     
