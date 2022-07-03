@@ -3,6 +3,8 @@
 namespace app\models;
 
 use Yii;
+use yii\behaviors\TimestampBehavior;
+use yii\db\Expression;
 
 /**
  * This is the model class for table "internment".
@@ -52,6 +54,16 @@ class Internment extends \yii\db\ActiveRecord
         'hospital_admission_date'
     ];
 
+    public function behaviors()
+    {
+        return [
+            [
+                'class' => TimestampBehavior::class,
+                'value' => new Expression('NOW()'),
+            ]
+        ];
+    }
+    
     /**
      * {@inheritdoc}
      */
