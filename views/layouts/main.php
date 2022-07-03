@@ -40,6 +40,7 @@ AppAsset::register($this);
         'items' => [
             ['label' => Yii::t('app','Forms'), 'items' => [
                 ['label' => Yii::t('app','Diagnostics'), 'url' => ['/diagnostic/index']],
+                ['label' => Yii::t('app','Internments'), 'url' => ['/internment/index']],
 
             ]],
             ['label' => Yii::t('app','Tables'), 'items' => [

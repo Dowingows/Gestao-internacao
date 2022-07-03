@@ -15,7 +15,9 @@ return [
     'Entities' => 'Entidades',
     'Forms' => 'Fichas',
     'Diagnostics' => 'Diagnósticos',
-
+    'Internments' => 'Internações',
+    
+    'Create Internment' => 'Cadastrar Internação',
     'Create Procedure' => 'Cadastrar Procedimento',
     'Create Operator' => 'Cadastrar Operadora',
     'Create Hospital' => 'Cadastrar Hospital',
@@ -35,8 +37,10 @@ return [
     'Update Hospital: {name}' => 'Atualizar Hospital: {name}',
     'Update Operator: {name}' => 'Atualizar Operadora: {name}',
     'Update Diagnostic: {name}' => 'Atualizar Diagnóstico: {name}',
+    'Update Internment: {name}' => 'Atualizar Internação: {name}',
 
     'View Diagnostic: {name}' => 'Ficha de Diagnóstico: Nº {name}',
+    'View Internment: {name}' => 'Ficha de Internação: Nº {name}',
 
     'Update' => 'Atualizar',
     'Delete' => 'Remover',
