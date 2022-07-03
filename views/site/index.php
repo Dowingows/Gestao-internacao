@@ -15,6 +15,7 @@ use yii\helpers\Html;
 
         <p class="lead">Sistema de gestão de Fichas de Internação e Diagnóstico</p>
 
+        <p><?= Html::a('Internações', ['/internment/index'], ['class' => 'btn btn-lg btn-info']); ?></p>
         <p><?= Html::a('Diagnósticos', ['/diagnostic/index'], ['class' => 'btn btn-lg btn-success']); ?></p>
     </div>
 </div>
