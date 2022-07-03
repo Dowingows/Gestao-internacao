@@ -43,6 +43,15 @@ use Yii;
  */
 class Internment extends \yii\db\ActiveRecord
 {
+    
+    public $dateFields = [
+        'authorization_date', 
+        'expiry_date_password', 
+        'request_date', 
+        'suggested_hospitalization_date',
+        'hospital_admission_date'
+    ];
+
     /**
      * {@inheritdoc}
      */
@@ -107,5 +116,18 @@ class Internment extends \yii\db\ActiveRecord
             'updated_at' => 'Atualizado em',
             'deleted_at' => 'Removido em',
         ];
+    }
+
+    public function beforeSave($insert) {
+        
+        $fields = $this->dateFields;
+
+        foreach($fields as $field){
+            if(!empty($this->{$field})){
+                $this->{$field} = implode("-", array_reverse(explode("/", $this->{$field})));
+            }  
+        }
+         
+        return parent::beforeSave($insert);
     }
 }
