@@ -35,7 +35,9 @@ return [
     'Update Hospital: {name}' => 'Atualizar Hospital: {name}',
     'Update Operator: {name}' => 'Atualizar Operadora: {name}',
     'Update Diagnostic: {name}' => 'Atualizar Diagnóstico: {name}',
-    
+
+    'View Diagnostic: {name}' => 'Ficha de Diagnóstico: Nº {name}',
+
     'Update' => 'Atualizar',
     'Delete' => 'Remover',
     'Search' => 'Buscar',

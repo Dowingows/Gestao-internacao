@@ -3,6 +3,8 @@
 namespace app\models;
 
 use Yii;
+use yii\behaviors\TimestampBehavior;
+use yii\db\Expression;
 
 /**
  * This is the model class for table "diagnostic".
@@ -35,6 +37,18 @@ use Yii;
  */
 class Diagnostic extends \yii\db\ActiveRecord
 {
+
+    public function behaviors()
+    {
+        return [
+            [
+                'class' => TimestampBehavior::class,
+                'value' => new Expression('NOW()'),
+            ]
+        ];
+    }
+
+    
     /**
      * {@inheritdoc}
      */
@@ -113,5 +127,38 @@ class Diagnostic extends \yii\db\ActiveRecord
     {
         return $this->hasMany(DiagnosticProcedure::class, ['diagnostic_id' => 'id']);
     }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getOperator()
+    {
+        return $this->hasOne(Operator::class, ['id' => 'operator_id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getProfessional()
+    {
+        return $this->hasOne(Professional::class, ['id' => 'professional_id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getContratadoExecutante()
+    {
+        return $this->hasOne(Hospital::class, ['id' => 'contratado_executante_id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getContractorExecutor()
+    {
+        return $this->hasOne(Hospital::class, ['id' => 'contractor_executor_id']);
+    }
+
 
 }

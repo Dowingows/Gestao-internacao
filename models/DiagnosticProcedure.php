@@ -60,4 +60,13 @@ class DiagnosticProcedure extends \yii\db\ActiveRecord
         return parent::beforeSave($insert);
     }
 
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getProcedure()
+    {
+        return $this->hasOne(Procedure::class, ['id' => 'procedure_id']);
+    }
+
+
 }

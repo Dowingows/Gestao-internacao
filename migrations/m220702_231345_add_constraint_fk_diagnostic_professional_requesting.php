@@ -3,16 +3,16 @@
 use yii\db\Migration;
 
 /**
- * Class m220702_224549_add_constraint_fk_diagnostic_operator
+ * Class m220702_231345_add_constraint_fk_diagnostic_professional_requesting
  */
-class m220702_224549_add_constraint_fk_diagnostic_operator extends Migration
+class m220702_231345_add_constraint_fk_diagnostic_professional_requesting extends Migration
 {
     /**
      * {@inheritdoc}
      */
     public function safeUp()
     {
-        $this->addForeignKey('fk-diagnostic-operator-id', 'diagnostic', 'operator_id', 'operator', 'id');
+        $this->addForeignKey('fk-diagnostic-professiona_requesting-id', 'diagnostic', 'professional_id', 'professional', 'id');
     }
 
     /**
@@ -21,7 +21,7 @@ class m220702_224549_add_constraint_fk_diagnostic_operator extends Migration
     public function safeDown()
     {
         $this->dropForeignKey(
-            'fk-diagnostic-operator-id',
+            'fk-diagnostic-professiona_requesting-id',
             'diagnostic'
         );
 
@@ -37,7 +37,7 @@ class m220702_224549_add_constraint_fk_diagnostic_operator extends Migration
 
     public function down()
     {
-        echo "m220702_224549_add_constraint_fk_diagnostic_operator cannot be reverted.\n";
+        echo "m220702_231345_add_constraint_fk_diagnostic_professional_requesting cannot be reverted.\n";
 
         return false;
     }

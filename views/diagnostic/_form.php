@@ -251,7 +251,7 @@ $procedures = ArrayHelper::map($procedures, 'id', 'procedure_code');
                     
         <div class="row pt-3 pb-3">
             <div class="col">
-                <h3>Dados do Contratado Solicitante</h3>
+                <h3>Dados do Contratado Executante</h3>
             </div>
         </div>
 

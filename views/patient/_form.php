@@ -21,7 +21,7 @@ if(isset($model->card_expiration_date)) {
 
     <?= $form->field($model, 'card_id_number')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'card_expiration_date')->widget(DatePicker::className(), [
+    <?= $form->field($model, 'card_expiration_date')->widget(DatePicker::class, [
         'convertFormat' => true,
         'pluginOptions' => [
             'autoclose' => true
@@ -29,7 +29,7 @@ if(isset($model->card_expiration_date)) {
     ]) ?>
 
     <?= $form->field($model, 'card_health_national')->textInput(['maxlength' => true]) ?>
-
+    <br/>
     <div class="form-group">
         <?= Html::submitButton(Yii::t('app', 'Save'), ['class' => 'btn btn-success']) ?>
     </div>
