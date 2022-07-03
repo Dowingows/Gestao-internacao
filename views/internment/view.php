@@ -23,6 +23,13 @@ function formatMoney($val)
 }
 
 ?>
+
+<?php
+$this->title = Yii::t('app', 'View Internment: {name}', [
+    'name' => $model->id,
+]);
+?>
+
 <div class="internment-view">
 
     <h1><?= Html::encode($this->title) ?></h1>

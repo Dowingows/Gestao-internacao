@@ -4,6 +4,7 @@ namespace app\controllers;
 
 use app\models\Internment;
 use app\models\InternmentProcedure;
+use app\models\InternmentSearch;
 use Exception;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
@@ -24,7 +25,7 @@ class InternmentController extends Controller
             parent::behaviors(),
             [
                 'verbs' => [
-                    'class' => VerbFilter::className(),
+                    'class' => VerbFilter::class,
                     'actions' => [
                         'delete' => ['POST'],
                     ],
@@ -39,22 +40,12 @@ class InternmentController extends Controller
      * @return string
      */
     public function actionIndex()
-    {
-        $dataProvider = new ActiveDataProvider([
-            'query' => Internment::find(),
-            /*
-            'pagination' => [
-                'pageSize' => 50
-            ],
-            'sort' => [
-                'defaultOrder' => [
-                    'id' => SORT_DESC,
-                ]
-            ],
-            */
-        ]);
+    {   
+        $searchModel = new InternmentSearch();
+        $dataProvider = $searchModel->search($this->request->queryParams);
 
         return $this->render('index', [
+            'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
     }
@@ -125,6 +116,10 @@ class InternmentController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+        
+        if(!empty($model->deleted_at)){
+            return $this->redirect(['index']);
+        }
 
         $internmentProcedure = $model->internmentProcedure;
 
@@ -168,7 +163,9 @@ class InternmentController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        $model = $this->findModel($id);
+        $model->deleted_at =  new \yii\db\Expression('NOW()');
+        $model->save();
 
         return $this->redirect(['index']);
     }

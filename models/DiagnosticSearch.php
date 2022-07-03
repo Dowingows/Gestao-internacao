@@ -43,6 +43,7 @@ class DiagnosticSearch extends Diagnostic
     {
         $query = Diagnostic::find()->andWhere(['is', 'deleted_at', new \yii\db\Expression('null') ]);
         $query->joinWith(['operator']);
+        $query->joinWith(['patient']);
         // add conditions that should always apply here
 
         $dataProvider = new ActiveDataProvider([
@@ -87,7 +88,7 @@ class DiagnosticSearch extends Diagnostic
             'professional_id' => $this->professional_id,
             'request_date' => $this->request_date,
             'contractor_applicant_id' => $this->contractor_applicant_id,
-            'contractor_executor_id' => $this->contractor_executor_id,
+            'contractor_executor_id' => $this->contractor_executor_id
         ]);
 
         $query->andFilterWhere(['ilike', 'accident_indication', $this->accident_indication])
@@ -106,7 +107,7 @@ class DiagnosticSearch extends Diagnostic
             ->andFilterWhere(['ilike', 'reason_closing_service', $this->reason_closing_service])
             ->andFilterWhere(['ilike', 'note', $this->note])
             ->andFilterWhere(['like', 'operator.name', $this->operator_name])
-            ->andFilterWhere(['like', 'patient.name', $this->operator_name])
+            ->andFilterWhere(['like', 'patient.name', $this->patient_name])
             ;
 
         return $dataProvider;

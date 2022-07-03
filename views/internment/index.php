@@ -4,6 +4,7 @@ use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\grid\ActionColumn;
 use yii\grid\GridView;
+use app\models\InternmentSearch;
 
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
@@ -22,42 +23,34 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
+        'filterModel' => $searchModel,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
+            
+            [
+                'attribute' => 'number_form_assigned_operator',
+                'value' => 'number_form_assigned_operator',
+                'label'=> 'Nº Guia OP'
+            ],
+            [
+                'attribute' => 'operator_name',
+                'value' => 'operator.name'
+            ],
+            [
 
-            'id',
-            'operator_id',
-            'number_form_assigned_operator',
-            'provider_form_number',
-            'authorization_date',
-            //'password',
-            //'expiry_date_password',
-            //'patient_id',
-            //'hospital_applicant_id',
-            //'professional_id',
-            //'hospital_requested_id',
-            //'suggested_hospitalization_date',
-            //'service_character',
-            //'regime',
-            //'quantity_daily_requested',
-            //'opme_usage_forecast',
-            //'chemotherapy_usage_forecast',
-            //'clinical_indication:ntext',
-            //'cid10_1',
-            //'cid10_2',
-            //'cid10_3',
-            //'cid10_4',
-            //'accident_indication',
-            //'hospital_admission_date',
-            //'quantity_daily_authorized',
-            //'authorized_accommodation_type',
-            //'hospital_authorized_id',
-            //'cnes_code',
-            //'note:ntext',
-            //'request_date',
-            //'created_at',
-            //'updated_at',
-            //'deleted_at',
+                'attribute' => 'authorization_date',
+                'format' => ['date', 'php:d/m/Y']
+            ], 
+            [
+                'attribute' => 'patient_name',
+                'value' => 'patient.name'
+            ],
+            'password',
+            [
+                'value' => 'created_at',
+                'label' => 'Data de Entrada',
+                'format' => ['date', 'php:d/m/Y']
+            ],
             [
                 'class' => ActionColumn::class,
                 'urlCreator' => function ($action,  $model, $key, $index, $column) {

@@ -46,6 +46,9 @@ use yii\db\Expression;
 class Internment extends \yii\db\ActiveRecord
 {
     
+    public $operator_name;
+    public $patient_name;
+    
     public $dateFields = [
         'authorization_date', 
         'expiry_date_password', 
@@ -96,12 +99,14 @@ class Internment extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'operator_id' => 'Operadora',
+            'operator_name' => 'Operadora',
             'number_form_assigned_operator' => 'Nº Guia Atribuido pela Operadora',
             'provider_form_number' =>  'Nº Guia do prestador',
             'authorization_date' =>  'Data de Autorizacão',
             'password' => 'Senha',
             'expiry_date_password' =>'Data de Validade da Senha',
             'patient_id' => 'Paciente',
+            'patient_name' => 'Paciente',
             'hospital_applicant_id' => 'Hospital Solicitante',
             'professional_id' => 'Profissional',
             'hospital_requested_id' => 'Hospital Solicitado',
