@@ -59,6 +59,14 @@ class InternmentProcedure extends \yii\db\ActiveRecord
         ];
     }
 
+    public function beforeSave($insert)
+    {
+        if(!empty($this->procedure_id)){
+            $this->procedure_price = Procedure::findOne($this->procedure_id)->price;
+        }
+        return parent::beforeSave($insert);
+    }
+    
     /**
      * Gets query for [[Internment]].
      *

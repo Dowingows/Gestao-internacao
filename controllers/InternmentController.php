@@ -3,6 +3,8 @@
 namespace app\controllers;
 
 use app\models\Internment;
+use app\models\InternmentProcedure;
+use Exception;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -78,9 +80,30 @@ class InternmentController extends Controller
     public function actionCreate()
     {
         $model = new Internment();
-
+        
         if ($this->request->isPost) {
             if ($model->load($this->request->post()) && $model->save()) {
+                $internmentProcedure = \app\models\Model::createMultiple(\app\models\InternmentProcedure::class);
+                \app\models\Model::loadMultiple($internmentProcedure, $this->request->post());
+                $transaction = \Yii::$app->db->beginTransaction();
+
+                try {
+                    if ($flag = $model->save(false)) {
+                        foreach ($internmentProcedure as $procedureData) {
+
+                            $procedureData->internment_id = $model->id;
+                            if (!($flag = $procedureData->save(false))) {
+                                $transaction->rollBack();
+                                break;
+                            }
+                        }
+                    }
+                    if ($flag) {
+                       $transaction->commit();
+                    }
+                } catch (Exception $e) {
+                    $transaction->rollBack();
+                }
                 return $this->redirect(['view', 'id' => $model->id]);
             }
         } else {
@@ -103,7 +126,31 @@ class InternmentController extends Controller
     {
         $model = $this->findModel($id);
 
+        $internmentProcedure = $model->internmentProcedure;
+
         if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
+            $internmentProcedure = \app\models\Model::createMultiple(InternmentProcedure::class, $internmentProcedure);
+            \app\models\Model::loadMultiple($internmentProcedure, $this->request->post());
+
+
+            $transaction = \Yii::$app->db->beginTransaction();
+            InternmentProcedure::deleteAll(['internment_id' => $model->id]);
+            try {
+                if ($flag = $model->save(false)) {
+                    foreach ($internmentProcedure as $procedureData) {
+                        $procedureData->internment_id = $model->id;
+                        if (!($flag = $procedureData->save(false))) {
+                            $transaction->rollBack();
+                            break;
+                        }
+                    }
+                }
+                if ($flag) {
+                    $transaction->commit();
+                }
+            } catch (Exception $e) {
+                $transaction->rollBack();
+            }
             return $this->redirect(['view', 'id' => $model->id]);
         }
 

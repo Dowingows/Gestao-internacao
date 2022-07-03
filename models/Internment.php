@@ -197,7 +197,7 @@ class Internment extends \yii\db\ActiveRecord
      */
     public function getInternmentProcedure()
     {
-        return $this->hasOne(InternmentProcedure::class, ['internment_id' => 'id']);
+        return $this->hasMany(InternmentProcedure::class, ['internment_id' => 'id']);
     }
     
 

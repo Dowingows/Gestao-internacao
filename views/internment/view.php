@@ -12,6 +12,16 @@ $this->title = $model->id;
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Internments'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
+
+function formatMoney($val)
+{
+    if (empty($val)) {
+        $val = 0;
+    }
+    $val = str_replace(".", ',', sprintf("%.2f", $val));
+    return 'R$ ' . $val;
+}
+
 ?>
 <div class="internment-view">
 
@@ -273,6 +283,40 @@ $this->params['breadcrumbs'][] = $this->title;
                     <div class="rp-field-value ">
                         <?= $model->accident_indication ?>
                     </div>
+                </div>
+            </div>
+
+            <!--    Procedimentos ou Itens Assistenciais Solicitados -->
+            <div class="section-title">Procedimentos ou Itens Assistenciais Solicitados</div>
+
+            <div class="rp-row">
+                <div class="rp-box">
+                    <table>
+                        <tr class="tb-title">
+                            <td width="10%">34 - Tabela</td>
+                            <td width="20%"> 35 - Código do procedimento</td>
+                            <td width="40%">36 - Descrição</td>
+                            <td width="10%">37 - Qtde. Solic.</td>
+                            <td width="10%">38 - Qtde. Aut</td>
+                            <td width="20%">Valor Unit</td>
+                        </tr>
+                        <tbody>
+                        <?php foreach ($model->internmentProcedure as $key => $int) : ?>
+                            <tr class="tb-body">
+                                <td class="text-mini"><span class="text-tiny">
+                                        <?= $key + 1 ?></span>
+                                    - <?= $int->procedure->table ?>
+                                </td>
+                                <td class="text-mini"><?= $int->procedure->procedure_code ?></td>
+                                <td class="text-mini"><?= $int->procedure->description ?></td>
+                                <td class="text-mini"><?= $int->quantity_requested ?></td>
+                                <td class="text-mini"><?= $int->quantity_authorized ?></td>
+                                <?php $class = empty($int->is_accountable) ? 'text-danger' : ''; ?>
+                                <td class="text-mini <?= $class ?> "><?= formatMoney($int->procedure_price) ?></td>
+                            </tr>
+                        <?php endforeach; ?>
+                        </tbody>
+                    </table>
                 </div>
             </div>
 

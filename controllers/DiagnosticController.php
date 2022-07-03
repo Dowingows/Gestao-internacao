@@ -145,7 +145,6 @@ class DiagnosticController extends Controller
                     $transaction->commit();
                 }
             } catch (Exception $e) {
-                print_r($e);die('exception');
                 $transaction->rollBack();
             }
             return $this->redirect(['view', 'id' => $model->id]);
