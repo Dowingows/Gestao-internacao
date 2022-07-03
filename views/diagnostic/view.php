@@ -339,7 +339,7 @@ $this->title = Yii::t('app', 'View Diagnostic: {name}', [
                 <div class="rp-field rp-field-full rp-gray ">
                     <div class="rp-field-label">58 - Observação</div>
                     <div class="rp-field-value rp-field-textarea ">
-
+                            <?= $model->note ?>
                     </div>
                 </div>
             </div>

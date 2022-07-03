@@ -43,7 +43,7 @@ use kartik\number\NumberControl;
             ],
     ]); ?>
 
-
+    <br/>
     <div class="form-group">
         <?= Html::submitButton(Yii::t('app', 'Save'), ['class' => 'btn btn-success']) ?>
     </div>

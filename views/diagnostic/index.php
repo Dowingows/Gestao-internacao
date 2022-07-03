@@ -22,44 +22,37 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
-    <?= GridView::widget([
+    
+
+<?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
-
-            'id',
-            'operator_id',
-            'accident_indication',
-            'ans_code',
-            'number_form_main',
-            //'authorization_date',
-            //'expiry_date_password',
-            //'number_form_assigned_operator',
-            //'patient_id',
-            //'professional_id',
-            //'service_character',
-            //'request_date',
-            //'clinical_indication',
-            //'contractor_name',
-            //'contracted_operator_code',
-            //'executor_contractor_name',
-            //'cod_operator_executing',
-            //'service_type',
-            //'type_medical_appointment',
-            //'provider_form_number',
-            //'reason_closing_service',
-            //'contractor_applicant_id',
-            //'contractor_executor_id',
-            //'note:ntext',
+            'number_form_assigned_operator',
             [
-                'class' => ActionColumn::className(),
-                'urlCreator' => function ($action, $model, $key, $index, $column) {
-                    return Url::toRoute([$action, 'id' => $model->id]);
-                 }
+                'label' => 'Operadora',
+                'value' => function ($d) {
+                    return $d->operator->name;
+                }
             ],
+            [
+                'label' => 'Paciente',
+                'value' => function ($model) {
+                    return $model->patient->name;
+                }
+            ],
+            'number_form_main',
+            [
+                'label' => 'Data de autorização',
+                'value' => function ($model) {
+                    return Yii::$app->formatter->asDateTime($model->authorization_date, 'php:d/m/Y');
+                }
+            ],
+            ['class' => 'yii\grid\ActionColumn'],
         ],
     ]); ?>
+
 
 
 </div>

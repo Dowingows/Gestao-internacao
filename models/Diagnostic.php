@@ -160,5 +160,13 @@ class Diagnostic extends \yii\db\ActiveRecord
         return $this->hasOne(Hospital::class, ['id' => 'contractor_executor_id']);
     }
 
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getPatient()
+    {
+        return $this->hasOne(Patient::class, ['id' => 'patient_id']);
+    }
+
 
 }
