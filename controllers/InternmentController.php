@@ -60,7 +60,7 @@ class InternmentController extends Controller
     {
         $model = $this->findModel($id);
 
-        if ($model->isExtention()){
+        if ($model->isExtension()){
             return $this->render('view_extension', [
                 'model' => $model,
             ]);
@@ -203,7 +203,7 @@ class InternmentController extends Controller
             return $this->redirect(['view', 'id' => $model->id]);
         }
         
-        if ($model->isExtention()){
+        if ($model->isExtension()){
             return $this->render('update_extension', [
                 'model' => $model,
             ]);

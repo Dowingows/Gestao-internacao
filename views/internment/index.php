@@ -26,7 +26,11 @@ $this->params['breadcrumbs'][] = $this->title;
         'filterModel' => $searchModel,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
-            
+            [
+                'attribute' => 'type_name',
+                'value' => 'typeName',
+                'filter' => Html::activeDropDownList($searchModel, 'type_name', ['0'=> 'Todos', '1'=> 'Normal', '2'=> 'Prorrogação'])
+            ],
             [
                 'attribute' => 'number_form_assigned_operator',
                 'value' => 'number_form_assigned_operator',

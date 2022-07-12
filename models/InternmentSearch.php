@@ -19,7 +19,7 @@ class InternmentSearch extends Internment
         return [
             [['id', 'operator_id', 'patient_id', 'hospital_applicant_id', 'professional_id', 'hospital_requested_id', 'quantity_daily_requested', 'quantity_daily_authorized', 'hospital_authorized_id'], 'integer'],
             [['authorization_date', 'created_at'],  'date'],
-            [['number_form_assigned_operator', 'provider_form_number', 'authorization_date', 'password', 'expiry_date_password', 'suggested_hospitalization_date', 'service_character', 'regime', 'opme_usage_forecast', 'chemotherapy_usage_forecast', 'clinical_indication', 'cid10_1', 'cid10_2', 'cid10_3', 'cid10_4', 'accident_indication', 'hospital_admission_date', 'authorized_accommodation_type', 'cnes_code', 'note', 'request_date', 'created_at', 'updated_at', 'deleted_at','patient_name', 'operator_name'], 'safe'],
+            [['number_form_assigned_operator', 'provider_form_number', 'authorization_date', 'password', 'expiry_date_password', 'suggested_hospitalization_date', 'service_character', 'regime', 'opme_usage_forecast', 'chemotherapy_usage_forecast', 'clinical_indication', 'cid10_1', 'cid10_2', 'cid10_3', 'cid10_4', 'accident_indication', 'hospital_admission_date', 'authorized_accommodation_type', 'type_name','cnes_code', 'note', 'request_date', 'created_at', 'updated_at', 'deleted_at','patient_name', 'operator_name'], 'safe'],
         ];
     }
 
@@ -68,6 +68,14 @@ class InternmentSearch extends Internment
             'desc' => ['patient.name' => SORT_DESC],
         ];
 
+        $dataProvider->sort->attributes['type_name'] = [
+            // The tables are the ones our relation are configured to
+            // in my case they are prefixed with "tbl_"
+            'asc' => ['internment_id' => SORT_ASC],
+            'desc' => ['internment_id' => SORT_DESC],
+        ];
+        
+
 
         $this->load($params);
 
@@ -76,7 +84,6 @@ class InternmentSearch extends Internment
             // $query->where('0=1');
             return $dataProvider;
         }
-
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
@@ -94,6 +101,16 @@ class InternmentSearch extends Internment
             'hospital_authorized_id' => $this->hospital_authorized_id,
             'request_date' => implode("-", array_reverse(explode("/", $this->request_date))),
         ]);
+
+        
+        if ($this->type_name != 0){
+            if ($this->type_name  == '1'){
+                $query->andFilterWhere(['is', 'internment_id', new \yii\db\Expression('null')]);
+            }else{
+                $query->andFilterWhere(['is not', 'internment_id', new \yii\db\Expression('null')]);
+            } 
+        }
+        
 
         $query->andFilterWhere(['ilike', 'number_form_assigned_operator', $this->number_form_assigned_operator])
             ->andFilterWhere(['ilike', 'provider_form_number', $this->provider_form_number])
