@@ -25,7 +25,7 @@ function formatMoney($val)
 ?>
 
 <?php
-$this->title = Yii::t('app', 'View Internment: {name}', [
+$this->title = Yii::t('app', 'View Internment Extension: {name}', [
     'name' => $model->id,
 ]);
 ?>
@@ -44,9 +44,7 @@ $this->title = Yii::t('app', 'View Internment: {name}', [
                     'method' => 'post',
                 ],
             ]) ?>
-
-            <?= Html::a(Yii::t('app', 'Extend'), ['create-extension', 'id' => $model->id], ['class' => 'btn btn-success']) ?>
-
+            <?= Html::a(Yii::t('app', 'Internment'), ['view', 'id' => $model->parent->id], ['class' => 'btn btn-secondary']) ?>
         </p>
     <?php else : ?>
         <h4 class="text-danger text-center"><i>Ficha removida em <?= Yii::$app->formatter->asDatetime($model->deleted_at, 'php:d/m/Y, H:i:s') ?></i></h4>
@@ -89,7 +87,7 @@ $this->title = Yii::t('app', 'View Internment: {name}', [
                 <div class="rp-field " style="width:420px">
                     <div class="rp-field-label">6 - Data de validade da Senha</div>
                     <div class="rp-field-value">
-                        <?= Yii::$app->formatter->asDateTime($model->expiry_date_password, 'php:d/m/Y') ?>
+                        <?=  Yii::$app->formatter->asDateTime($model->expiry_date_password,'php:d/m/Y') ?>
                     </div>
                 </div>
             </div>
@@ -311,20 +309,20 @@ $this->title = Yii::t('app', 'View Internment: {name}', [
                             <td width="20%">Valor Unit</td>
                         </tr>
                         <tbody>
-                            <?php foreach ($model->internmentProcedure as $key => $int) : ?>
-                                <tr class="tb-body">
-                                    <td class="text-mini"><span class="text-tiny">
-                                            <?= $key + 1 ?></span>
-                                        - <?= $int->procedure->table ?>
-                                    </td>
-                                    <td class="text-mini"><?= $int->procedure->procedure_code ?></td>
-                                    <td class="text-mini"><?= $int->procedure->description ?></td>
-                                    <td class="text-mini"><?= $int->quantity_requested ?></td>
-                                    <td class="text-mini"><?= $int->quantity_authorized ?></td>
-                                    <?php $class = empty($int->is_accountable) ? 'text-danger' : ''; ?>
-                                    <td class="text-mini <?= $class ?> "><?= formatMoney($int->procedure_price) ?></td>
-                                </tr>
-                            <?php endforeach; ?>
+                        <?php foreach ($model->internmentProcedure as $key => $int) : ?>
+                            <tr class="tb-body">
+                                <td class="text-mini"><span class="text-tiny">
+                                        <?= $key + 1 ?></span>
+                                    - <?= $int->procedure->table ?>
+                                </td>
+                                <td class="text-mini"><?= $int->procedure->procedure_code ?></td>
+                                <td class="text-mini"><?= $int->procedure->description ?></td>
+                                <td class="text-mini"><?= $int->quantity_requested ?></td>
+                                <td class="text-mini"><?= $int->quantity_authorized ?></td>
+                                <?php $class = empty($int->is_accountable) ? 'text-danger' : ''; ?>
+                                <td class="text-mini <?= $class ?> "><?= formatMoney($int->procedure_price) ?></td>
+                            </tr>
+                        <?php endforeach; ?>
                         </tbody>
                     </table>
                 </div>
@@ -409,19 +407,15 @@ $this->title = Yii::t('app', 'View Internment: {name}', [
                     </div>
                 </div>
             </div>
-            
+
+
+
+
             <div class="content-bottom">
                 Criado em <?= Yii::$app->formatter->asDatetime($model->created_at, 'php:d/m/Y, H:i:s') ?>.
 
                 Última modificação <?= Yii::$app->formatter->asDatetime($model->updated_at, 'php:d/m/Y, H:i:s') ?>
             </div>
         </div>
-        <hr />
-            <?php foreach ($model->extensions as $extension) : ?>
-                <div class="">
-                    <?= Html::a('Prorrogação - ' . $extension->id, ["/internment/view", 'id' => $extension->id], ['class' => 'btn btn-md btn-primary']); ?>
-                </div>
-                <br />
-            <?php endforeach; ?>
     </div>
 </div>

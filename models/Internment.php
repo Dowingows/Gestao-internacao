@@ -155,12 +155,20 @@ class Internment extends \yii\db\ActiveRecord
         return $this->internment_id != null;
     }
 
-     /**
+    /**
      * @return \yii\db\ActiveQuery
      */
     public function getParent()
     {
         return $this->hasOne(Internment::class, ['id' => 'internment_id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getExtensions()
+    {
+        return $this->hasMany(Internment::class, ['internment_id' => 'id']);
     }
 
     /**

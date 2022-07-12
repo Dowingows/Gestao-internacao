@@ -16,6 +16,7 @@ return [
     'Forms' => 'Fichas',
     'Diagnostics' => 'Diagnósticos',
     'Internments' => 'Internações',
+    'Internment' => 'Internação',
     
     'Create Internment' => 'Cadastrar Internação',
     'Create Procedure' => 'Cadastrar Procedimento',
@@ -43,6 +44,7 @@ return [
 
     'View Diagnostic: {name}' => 'Ficha de Diagnóstico: Nº {name}',
     'View Internment: {name}' => 'Ficha de Internação: Nº {name}',
+    'View Internment Extension: {name}' => 'Ficha de Prorrogação: Nº {name}',
 
     'Update' => 'Atualizar',
     'Delete' => 'Remover',

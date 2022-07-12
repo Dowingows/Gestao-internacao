@@ -58,9 +58,17 @@ class InternmentController extends Controller
      */
     public function actionView($id)
     {
-        return $this->render('view', [
-            'model' => $this->findModel($id),
-        ]);
+        $model = $this->findModel($id);
+
+        if ($model->isExtention()){
+            return $this->render('view_extension', [
+                'model' => $model,
+            ]);
+        }else{
+            return $this->render('view', [
+                'model' => $model,
+            ]);
+        }
     }
 
     /**
