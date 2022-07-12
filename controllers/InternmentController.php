@@ -194,10 +194,17 @@ class InternmentController extends Controller
             }
             return $this->redirect(['view', 'id' => $model->id]);
         }
-
-        return $this->render('update', [
-            'model' => $model,
-        ]);
+        
+        if ($model->isExtention()){
+            return $this->render('update_extension', [
+                'model' => $model,
+            ]);
+        }else{
+            return $this->render('update', [
+                'model' => $model,
+            ]);
+        }
+        
     }
 
     /**

@@ -36,6 +36,11 @@ foreach ($fields as $field) {
     <h4>Prorrogação da Ficha <span style="color:#B80000"><?= $parent->number_form_assigned_operator ?></span></h4>
 
     <?php $form = ActiveForm::begin(['id' => 'dynamic-form']); ?>
+    
+    <?= $form->field($parent, 'operator_id')->hiddenInput()->label(false); ?>
+    <?= $form->field($parent, 'hospital_requested_id')->hiddenInput()->label(false); ?>
+    <?= $form->field($parent, 'hospital_authorized_id')->hiddenInput()->label(false); ?>
+    <?= $form->field($model, 'internment_id')->hiddenInput(['value' => $parent->id])->label(false) ?>
 
     <div class="container g-0 ">
         <br />
@@ -161,7 +166,7 @@ foreach ($fields as $field) {
                     <?= $form->field($model, 'quantity_daily_requested')->textInput() ?>
                 </div>
                 <div class="col">
-                    <?php //$form->field($model, 'requested_accommodation_type')->textInput(['maxlength' => true]) ?>
+                    <?= $form->field($model, 'requested_accommodation_type')->textInput(['maxlength' => true]) ?>
                 </div>
             </div>
             <div class="row">
@@ -260,7 +265,7 @@ foreach ($fields as $field) {
             <div class="row">
                
                 <div class="col">
-                    <?php //$form->field($model, 'operator_justication')->textarea(['rows' => 6])?>
+                    <?= $form->field($model, 'operator_justification')->textarea(['rows' => 6])?>
                 </div>
             </div>
 

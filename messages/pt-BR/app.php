@@ -39,6 +39,7 @@ return [
     'Update Operator: {name}' => 'Atualizar Operadora: {name}',
     'Update Diagnostic: {name}' => 'Atualizar Diagnóstico: {name}',
     'Update Internment: {name}' => 'Atualizar Internação: {name}',
+    'Update Internment Extension: {name}' => 'Atualizar Prorrogação: {name}',
 
     'View Diagnostic: {name}' => 'Ficha de Diagnóstico: Nº {name}',
     'View Internment: {name}' => 'Ficha de Internação: Nº {name}',

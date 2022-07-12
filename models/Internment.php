@@ -84,7 +84,7 @@ class Internment extends \yii\db\ActiveRecord
             [['operator_id', 'patient_id', 'hospital_applicant_id', 'professional_id', 'hospital_requested_id', 'hospital_authorized_id'], 'required'],
             [['operator_id', 'patient_id', 'hospital_applicant_id', 'professional_id', 'hospital_requested_id', 'quantity_daily_requested', 'quantity_daily_authorized', 'hospital_authorized_id'], 'default', 'value' => null],
             [['operator_id', 'patient_id', 'hospital_applicant_id', 'professional_id', 'hospital_requested_id', 'quantity_daily_requested', 'quantity_daily_authorized', 'hospital_authorized_id'], 'integer'],
-            [['authorization_date', 'expiry_date_password', 'suggested_hospitalization_date', 'hospital_admission_date', 'request_date', 'created_at', 'updated_at', 'deleted_at'], 'safe'],
+            [['authorization_date', 'expiry_date_password', 'suggested_hospitalization_date', 'hospital_admission_date', 'request_date', 'created_at', 'updated_at', 'deleted_at', 'internment_id', 'operator_justification', 'requested_accommodation_type'], 'safe'],
             [['clinical_indication', 'note'], 'string'],
             [['number_form_assigned_operator'], 'string', 'max' => 11],
             [['provider_form_number', 'password', 'service_character', 'regime', 'opme_usage_forecast', 'chemotherapy_usage_forecast', 'cid10_1', 'cid10_2', 'cid10_3', 'cid10_4', 'accident_indication', 'authorized_accommodation_type', 'cnes_code'], 'string', 'max' => 50],
@@ -132,6 +132,8 @@ class Internment extends \yii\db\ActiveRecord
             'created_at' => 'Criado em',
             'updated_at' => 'Atualizado em',
             'deleted_at' => 'Removido em',
+            'operator_justification' => 'Justificativa da Operadora',
+            'requested_accommodation_type' => 'Tipo de Acomodação Solicitada'
         ];
     }
 
@@ -146,6 +148,19 @@ class Internment extends \yii\db\ActiveRecord
         }
          
         return parent::beforeSave($insert);
+    }
+
+    public function isExtention()
+    {
+        return $this->internment_id != null;
+    }
+
+     /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getParent()
+    {
+        return $this->hasOne(Internment::class, ['id' => 'internment_id']);
     }
 
     /**

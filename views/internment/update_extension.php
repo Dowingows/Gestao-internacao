@@ -1,0 +1,24 @@
+<?php
+
+use yii\helpers\Html;
+
+/* @var $this yii\web\View */
+/* @var $model app\models\Internment */
+
+$this->title = Yii::t('app', 'Update Internment Extension: {name}', [
+    'name' => $model->id,
+]);
+$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Internments'), 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => $model->id, 'url' => ['view', 'id' => $model->id]];
+$this->params['breadcrumbs'][] = Yii::t('app', 'Update');
+?>
+<div class="internment-update">
+
+    <h1><?= Html::encode($this->title) ?></h1>
+
+    <?= $this->render('_form_extension', [
+        'model' => $model,
+        'parent' => $model->parent
+    ]) ?>
+
+</div>
