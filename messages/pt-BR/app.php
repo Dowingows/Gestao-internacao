@@ -26,6 +26,7 @@ return [
     'Create Professional' => 'Cadastrar Profissional',
     'Create Supply' => 'Cadastrar Material',  
     'Create Diagnostic' => 'Cadastrar Diagnóstico',    
+    'Create Internment Extension' => 'Cadastrar Prorrogação',
     
     'Are you sure you want to delete this item?' => 'Deseja realmente excluir este item?',
     
@@ -44,6 +45,7 @@ return [
 
     'Update' => 'Atualizar',
     'Delete' => 'Remover',
+    'Extend' => 'Prorrogar',
     'Search' => 'Buscar',
     'Save' => 'Salvar',
 

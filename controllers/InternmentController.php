@@ -107,6 +107,52 @@ class InternmentController extends Controller
     }
 
     /**
+     * Creates a new Internment model.
+     * If creation is successful, the browser will be redirected to the 'view' page.
+     * @return string|\yii\web\Response
+     */
+    public function actionCreateExtension($id)
+    {
+        $parent = $this->findModel($id);
+    
+        $model = new Internment();
+        
+        if ($this->request->isPost) {
+            if ($model->load($this->request->post()) && $model->save()) {
+                $internmentProcedure = \app\models\Model::createMultiple(\app\models\InternmentProcedure::class);
+                \app\models\Model::loadMultiple($internmentProcedure, $this->request->post());
+                $transaction = \Yii::$app->db->beginTransaction();
+
+                try {
+                    if ($flag = $model->save(false)) {
+                        foreach ($internmentProcedure as $procedureData) {
+
+                            $procedureData->internment_id = $model->id;
+                            if (!($flag = $procedureData->save(false))) {
+                                $transaction->rollBack();
+                                break;
+                            }
+                        }
+                    }
+                    if ($flag) {
+                       $transaction->commit();
+                    }
+                } catch (Exception $e) {
+                    $transaction->rollBack();
+                }
+                return $this->redirect(['view', 'id' => $model->id]);
+            }
+        } else {
+            $model->loadDefaultValues();
+        }
+
+        return $this->render('create_extension', [
+            'model' => $model,
+            'parent' => $parent
+        ]);
+    }
+
+    /**
      * Updates an existing Internment model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param int $id ID

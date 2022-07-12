@@ -44,6 +44,9 @@ $this->title = Yii::t('app', 'View Internment: {name}', [
                     'method' => 'post',
                 ],
             ]) ?>
+
+            <?= Html::a(Yii::t('app', 'Extend'), ['create-extension', 'id' => $model->id], ['class' => 'btn btn-success']) ?>
+
         </p>
     <?php else : ?>
         <h4 class="text-danger text-center"><i>Ficha removida em <?= Yii::$app->formatter->asDatetime($model->deleted_at, 'php:d/m/Y, H:i:s') ?></i></h4>
