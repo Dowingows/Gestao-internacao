@@ -17,6 +17,7 @@ return [
     'Diagnostics' => 'Diagnósticos',
     'Internments' => 'Internações',
     'Internment' => 'Internação',
+    'Batches' => 'Lotes',
     
     'Create Internment' => 'Cadastrar Internação',
     'Create Procedure' => 'Cadastrar Procedimento',
@@ -27,6 +28,7 @@ return [
     'Create Professional' => 'Cadastrar Profissional',
     'Create Supply' => 'Cadastrar Material',  
     'Create Diagnostic' => 'Cadastrar Diagnóstico',    
+    'Create Batch' => 'Cadastrar Lote',    
     'Create Internment Extension' => 'Cadastrar Prorrogação',
     
     'Are you sure you want to delete this item?' => 'Deseja realmente excluir este item?',
@@ -40,10 +42,12 @@ return [
     'Update Operator: {name}' => 'Atualizar Operadora: {name}',
     'Update Diagnostic: {name}' => 'Atualizar Diagnóstico: {name}',
     'Update Internment: {name}' => 'Atualizar Internação: {name}',
+    'Update Batch: {name}' => 'Atualizar Lote: {name}',
     'Update Internment Extension: {name}' => 'Atualizar Prorrogação: {name}',
 
     'View Diagnostic: {name}' => 'Ficha de Diagnóstico: Nº {name}',
     'View Internment: {name}' => 'Ficha de Internação: Nº {name}',
+    'View Batch: {name}' => 'Atualizar lote: {name}',
     'View Internment Extension: {name}' => 'Ficha de Prorrogação: Nº {name}',
 
     'Update' => 'Atualizar',
