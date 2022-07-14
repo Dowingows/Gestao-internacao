@@ -226,7 +226,7 @@ class Diagnostic extends \yii\db\ActiveRecord
         $dadosSolicitacao->appendChild($xml->createElement("ans:dataSolicitacao",  $diagnostic->request_date));
 
         /* CaraterAtendimento opções: 1- Eletivo ; 2- Urgência  */
-        if (!empty( $diagnostic->carater_atendimento)) {
+        if (!empty( $diagnostic->service_character)) {
             $dadosSolicitacao->appendChild($xml->createElement("ans:caraterAtendimento",  $diagnostic->service_character));
         } else {
             $dadosSolicitacao->appendChild($xml->createElement("ans:caraterAtendimento", 2));
