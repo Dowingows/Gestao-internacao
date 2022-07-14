@@ -5,6 +5,7 @@ namespace app\controllers;
 use app\models\Batch;
 use app\models\BatchSearch;
 use app\models\Diagnostic;
+use app\models\Internment;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -138,14 +139,13 @@ class BatchController extends Controller
         $batch = Batch::findOne($id);
         $file_name = "psicoclinica_lote_{$id}_" . date('dmy_his');
         if (!empty($batch->internments)) {
-            // $data = Internacao::generateXML($batch, 1);
+            $data = Internment::generateXML($batch, 1);
 
-            // header('Content-type: text/xml');
-            // header("Content-Disposition: attachment; filename='{$file_name}'");
+            header('Content-type: text/xml');
+            header("Content-Disposition: attachment; filename={$file_name}_internacao.xml");
             
-            // echo $data;
-            print_r($batch->internments);die;
-            die('ali');
+            echo $data;
+            
             exit();
         } else {
             
