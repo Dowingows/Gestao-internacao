@@ -159,7 +159,7 @@ class Internment extends \yii\db\ActiveRecord
 
     public function getTypeName()
     {
-        return $this->internment_id != null ? 'Prorrogação' : 'Normal';
+        return $this->internment_id != null ? 'Prorrogada' : 'Normal';
     }
 
     /**

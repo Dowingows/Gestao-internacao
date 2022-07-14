@@ -29,7 +29,7 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'attribute' => 'type_name',
                 'value' => 'typeName',
-                'filter' => Html::activeDropDownList($searchModel, 'type_name', ['0'=> 'Todos', '1'=> 'Normal', '2'=> 'Prorrogação'])
+                'filter' => Html::activeDropDownList($searchModel, 'type_name', ['0'=> 'Todos', '1'=> 'Normal', '2'=> 'Prorrogada'])
             ],
             [
                 'attribute' => 'number_form_assigned_operator',
