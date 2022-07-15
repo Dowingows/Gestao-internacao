@@ -42,12 +42,12 @@ $this->title = Yii::t('app', 'View Batch: {name}', [
         'attributes' => [
             'id',
             'hash',
-            'mes',
+            'month',
             [
                 'label' => 'Criado em',
                 'value' => function ($model) {
                     if (!empty($model->created_at)) {
-                        return date('d/m/Y H:i', strtotime($model->created_at)); // $data['name'] for array data, e.g. using SqlDataProvider.
+                        return date('d/m/Y, H:i', strtotime($model->created_at)); // $data['name'] for array data, e.g. using SqlDataProvider.
                     }
                     return '';
                 }
