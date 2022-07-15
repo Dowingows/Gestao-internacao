@@ -75,6 +75,24 @@ $config = [
         */
     ],
     'params' => $params,
+    'container' => [
+        'definitions' => [
+            yii\grid\GridView::class => [
+                'layout' => "{summary}\n{items}\n<nav >{pager}</nav>",
+                'pager' => [
+                    'maxButtonCount' => 10,
+                    'options' => [
+                        'tag' => 'ul',
+                        'class' => 'pagination pagination-sm',
+                    ],
+                    'linkOptions' => ['class' => 'page-link'],
+                    'pageCssClass' => ['class' => 'page-item'],
+                    'activePageCssClass' => 'page-item active',
+                    'disabledPageCssClass' => 'page-item disabled',
+                ],
+            ],
+        ],
+    ],
 ];
 
 if (YII_ENV_DEV) {

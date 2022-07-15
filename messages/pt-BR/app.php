@@ -47,7 +47,7 @@ return [
 
     'View Diagnostic: {name}' => 'Ficha de Diagnóstico: Nº {name}',
     'View Internment: {name}' => 'Ficha de Internação: Nº {name}',
-    'View Batch: {name}' => 'Atualizar lote: {name}',
+    'View Batch: {name}' => 'Lote: {name}',
     'View Internment Extension: {name}' => 'Ficha de Prorrogação: Nº {name}',
 
     'Update' => 'Atualizar',

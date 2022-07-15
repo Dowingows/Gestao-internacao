@@ -23,7 +23,6 @@ $this->title = Yii::t('app', 'View Batch: {name}', [
     <h3><?= !empty($model->internments) ? 'Internação' : 'Diagnóstico';  ?></h3>
     <p>
         <?= Html::a(' XML', ['xml', 'id' => $model->id], ['target' => '_blank', 'class' => 'btn btn-primary']) ?>
-        <?= Html::a(Yii::t('app', 'Update'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
         <?= Html::a(Yii::t('app', 'Delete'), ['delete', 'id' => $model->id], [
             'class' => 'btn btn-danger',
             'data' => [
