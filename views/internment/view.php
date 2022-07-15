@@ -33,7 +33,7 @@ $this->title = Yii::t('app', 'View Internment: {name}', [
 <div class="internment-view">
 
     <h1><?= Html::encode($this->title) ?></h1>
-
+    
     <?php if (empty($model->deleted_at)) : ?>
         <p>
             <?= Html::a(Yii::t('app', 'Update'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
@@ -51,7 +51,11 @@ $this->title = Yii::t('app', 'View Internment: {name}', [
     <?php else : ?>
         <h4 class="text-danger text-center"><i>Ficha removida em <?= Yii::$app->formatter->asDatetime($model->deleted_at, 'php:d/m/Y, H:i:s') ?></i></h4>
     <?php endif ?>
-
+    
+    <?php if(!empty($model->batch_id)): ?>
+        <h5 class="text-end display-block"><i>Ficha associada ao <span class="text-primary">  <?= Html::a('lote '.$model->batch_id, ["/batch/view", 'id' => $model->batch_id]); ?></span></i></h5>
+    <?php endif; ?>
+      
     <div class="scrolly">
         <div class="rp-content ">
 

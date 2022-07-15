@@ -2,10 +2,12 @@
 
 namespace app\controllers;
 
+use Yii;
 use app\models\Batch;
 use app\models\BatchSearch;
 use app\models\Diagnostic;
 use app\models\Internment;
+use app\models\InternmentAllSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -24,7 +26,7 @@ class BatchController extends Controller
             parent::behaviors(),
             [
                 'verbs' => [
-                    'class' => VerbFilter::className(),
+                    'class' => VerbFilter::class,
                     'actions' => [
                         'delete' => ['POST'],
                     ],
@@ -63,26 +65,149 @@ class BatchController extends Controller
     }
 
     /**
-     * Creates a new Batch model.
+     * Creates a new Lote model.
      * If creation is successful, the browser will be redirected to the 'view' page.
-     * @return string|\yii\web\Response
+     * @return mixed
      */
-    public function actionCreate()
+    public function actionCreateInternment()
     {
+        $showForm = false;
+
         $model = new Batch();
 
-        if ($this->request->isPost) {
-            if ($model->load($this->request->post()) && $model->save()) {
-                return $this->redirect(['view', 'id' => $model->id]);
+        $searchModel = new InternmentAllSearch();
+        
+        if (empty($this->request->queryParams['InternmentAllSearch'])) {
+            $internments = $searchModel->search([]);
+        } else {
+            $showForm = true;
+            $internments =  $searchModel->search($this->request->queryParams['InternmentAllSearch']);
+        }
+  
+        $answers = [];
+
+        if (!empty($this->request->post())) {
+            $lote = $this->generateLote($this->request->post());
+            if (!empty($lote)) {
+                return $this->redirect(['view', 'id' => $lote->id]);
+            } else {
+
+                $error_message = "Erro ao gerar lote! Tente novamente";
+                return $this->render('create-internment', [
+                    'model' => $model,
+                    'internments' => $internments,
+                    'answers' => $answers ,
+                    'search' => $searchModel,
+                    'showForm' => $showForm,
+                    'error_message' => $error_message
+                ]);
             }
         } else {
-            $model->loadDefaultValues();
+            return $this->render('create-internment', [
+                'model' => $model,
+                'internments' => $internments,
+                'answers' => $answers ,
+                'search' => $searchModel,
+                'showForm' => $showForm
+            ]);
+        }
+    }
+
+    protected function generateLote($answers)
+    {
+        /*Only create a new Lote if there is at least one liked internacao */
+
+        $transaction = Yii::$app->db->beginTransaction();
+
+     
+        try {
+            $atLeastOne = false;
+            $batch = new Batch();
+
+            $batch->load(['Lote']);
+            if ($batch->save()) {
+                foreach ($answers['answers'] as $id => $checked) {
+                    $internment = Internment::findOne($id);
+                    /*If the internment has already linked with lote, then don`t link it*/
+                    if (empty($internment->batch)) {
+                        $atLeastOne = true;
+                        $internment->batch_id = $batch->id;
+                        $internment->save();
+                    }
+                }
+
+                if ($atLeastOne) {
+                    $transaction->commit();
+                } else {
+
+                    $batch = null;
+                    $transaction->rollBack();
+                }
+            } else {
+                $batch = null;
+            }
+
+        } catch (\Exception $e) {
+            $batch = null;
+
+            $transaction->rollBack();
+        } catch (\Throwable $e) {
+            $batch = null;
+            $transaction->rollBack();
         }
 
-        return $this->render('create', [
-            'model' => $model,
-        ]);
+        return $batch;
     }
+
+    protected function generateLoteDiag($answers)
+    {
+        $transaction = Yii::$app->db->beginTransaction();
+
+        $lote = null;
+        try {
+            $atLeastOne = false;
+            $lote = new Lote();
+
+            $lote->load(['Lote']);
+            if ($lote->save()) {
+                foreach ($answers['answers'] as $id => $checked) {
+                    $diagnostico = Diagnostico::findOne($id);
+                    /*If the internacao has already linked with lote, then don`t link it*/
+                    if (empty($diagnostico->lote_id)) {
+                        $atLeastOne = true;
+                        $diagnostico->lote_id = $lote->id;
+                        $diagnostico->save();
+                    }
+                }
+
+                if ($atLeastOne) {
+                    $transaction->commit();
+                } else {
+
+
+                    $lote = null;
+                    $transaction->rollBack();
+                }
+            } else {
+                $lote = null;
+            }
+
+        } catch (\Exception $e) {
+            print_r($e);
+            die;
+            $lote = null;
+            $transaction->rollBack();
+        } catch (\Throwable $e) {
+            print_r($e);
+            die;
+            $lote = null;
+            $transaction->rollBack();
+        }
+        return $lote;
+    }
+
+    
+
 
     /**
      * Deletes an existing Batch model.
@@ -135,6 +260,54 @@ class BatchController extends Controller
 
             echo $data;
             exit();
+        }
+    }
+
+    public function actionCreateLoteDiagnostico()
+    {
+        $showForm = false;
+
+        $model = new Lote();
+
+        $search = new DiagnosticoAllSearch();
+
+
+        if (empty(Yii::$app->request->queryParams['DiagnosticoAllSearch'])) {
+            $diagnosticos = [];
+        } else {
+
+            $showForm = true;
+            $diagnosticos = $search->search(Yii::$app->request->queryParams);
+
+        }
+
+        $answers = [];
+
+
+        if (!empty(Yii::$app->request->post())) {
+            $lote = $this->generateLoteDiag(Yii::$app->request->post());
+            if (!empty($lote)) {
+                return $this->redirect(['view', 'id' => $lote->id]);
+            } else {
+                $error_message = "Erro ao gerar lote! Tente novamente";
+                return $this->render('create-diagnostico', [
+                    'model' => $model,
+                    'diagnosticos' => $diagnosticos,
+                    'answers' => 'answers',
+                    'search' => $search,
+                    'showForm' => $showForm,
+                    'error_message' => $error_message
+                ]);
+            }
+        } else {
+
+            return $this->render('create-diagnostico', [
+                'model' => $model,
+                'diagnosticos' => $diagnosticos,
+                'answers' => 'answers',
+                'search' => $search,
+                'showForm' => $showForm
+            ]);
         }
     }
 

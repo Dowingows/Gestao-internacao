@@ -3,30 +3,35 @@
 use yii\helpers\Html;
 use yii\widgets\DetailView;
 
+use app\assets\CustomAsset;
+
+CustomAsset::register($this);
+
 /* @var $this yii\web\View */
-/* @var $model app\models\Batch */
+/* @var $model app\models\Lote */
 
 $this->title = $model->id;
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Batches'), 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'Lotes', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
-\yii\web\YiiAsset::register($this);
 ?>
+
 <?php
 $this->title = Yii::t('app', 'View Batch: {name}', [
     'name' => $model->id,
 ]);
 ?>
 
-<div class="batch-view">
+<div class="lote-view">
 
     <h1><?= Html::encode($this->title) ?></h1>
-    <h3><?= !empty($model->internments) ? 'Internação' : 'Diagnóstico';  ?></h3>
-    <p>
+    
+
+    <p class="pull-right">
         <?= Html::a(' XML', ['xml', 'id' => $model->id], ['target' => '_blank', 'class' => 'btn btn-primary']) ?>
-        <?= Html::a(Yii::t('app', 'Delete'), ['delete', 'id' => $model->id], [
+        <?= Html::a('Remover', ['delete', 'id' => $model->id], [
             'class' => 'btn btn-danger',
             'data' => [
-                'confirm' => Yii::t('app', 'Are you sure you want to delete this item?'),
+                'confirm' => 'Are you sure you want to delete this item?',
                 'method' => 'post',
             ],
         ]) ?>
@@ -37,12 +42,16 @@ $this->title = Yii::t('app', 'View Batch: {name}', [
         'attributes' => [
             'id',
             'hash',
+            'mes',
             [
-                'attribute'=>'created_at',
+                'label' => 'Criado em',
                 'value' => function ($model) {
-                    return Yii::$app->formatter->asDateTime($model->created_at, 'php:d/m/Y, H:i');
-                },
-	        ],
+                    if (!empty($model->created_at)) {
+                        return date('d/m/Y H:i', strtotime($model->created_at)); // $data['name'] for array data, e.g. using SqlDataProvider.
+                    }
+                    return '';
+                }
+            ],
         ],
     ]) ?>
 
@@ -63,7 +72,7 @@ $this->title = Yii::t('app', 'View Batch: {name}', [
             <?php $i = 1;
             foreach ($model->diagnostics as $diag) : ?>
                 <tr>
-                    <td> <?= Html::a('# ' . $i++, ['/diagnostics/view/', 'id' => $diag->id], ['target' => '_blank']); ?></td>
+                    <td> <?= Html::a('# ' . $i++, ['/diagnostic/view/', 'id' => $diag->id], ['target' => '_blank']); ?></td>
 
                     <td><?= $diag->number_form_assigned_operator ?></td>
 
@@ -86,8 +95,8 @@ $this->title = Yii::t('app', 'View Batch: {name}', [
         <table class="table table-striped table-bordered">
             <thead>
             <th></th>
-            <th>Número da Guía Atribuído pela Operadora</th>
-            <th>Tipo internação</th>
+            <th>Nº Guia Atribuido pela Operadora</th>
+            <th>Tipo</th>
             <th>Data da Autorização</th>
             <th>Paciente</th>
             <th>Operadora</th>
@@ -96,7 +105,7 @@ $this->title = Yii::t('app', 'View Batch: {name}', [
             <?php $i = 1;
             foreach ($model->internments as $int) : ?>
                 <tr>
-                    <td> <?= Html::a('# ' . $i++, ['/internments/view/', 'id' => $int->id], ['target' => '_blank']); ?></td>
+                    <td> <?= Html::a('# ' . $i++, ['/internment/view/', 'id' => $int->id], ['target' => '_blank']); ?></td>
 
                     <td><?= $int->number_form_assigned_operator ?></td>
                     <td>

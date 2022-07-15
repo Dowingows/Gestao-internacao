@@ -135,7 +135,7 @@ class Internment extends \yii\db\ActiveRecord
             'updated_at' => 'Atualizado em',
             'deleted_at' => 'Removido em',
             'operator_justification' => 'Justificativa da Operadora',
-            'requested_accommodation_type' => 'Tipo de Acomodação Solicitada'
+            'requested_accommodation_type' => 'Tipo de Acomodação Solicitada',
         ];
     }
 

@@ -17,6 +17,7 @@ use Yii;
  */
 class Batch extends \yii\db\ActiveRecord
 {
+    public $month;
     /**
      * {@inheritdoc}
      */
@@ -47,6 +48,13 @@ class Batch extends \yii\db\ActiveRecord
             'created_at' => 'Criado em',
             'updated_at' => 'Atualizado em',
         ];
+    }
+
+    public static function find()
+    {
+        return parent::find()->select([
+            '*', 'EXTRACT(MONTH FROM created_at) as month',
+        ]);
     }
 
     /**

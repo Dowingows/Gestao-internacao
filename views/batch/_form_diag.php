@@ -2,6 +2,9 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+use yii\helpers\ArrayHelper;
+
+use kartik\select2\Select2;
 
 /* @var $this yii\web\View */
 /* @var $internacoes app\models\Internacao[] */
@@ -13,8 +16,8 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $this->render('components/table-picklist', [
-        'internments' => $internments,
+    <?= $this->render('components/table-picklist-diag', [
+        'diagnosticos' => $diagnosticos,
         'answers' => $answers
     ]) ?>
 

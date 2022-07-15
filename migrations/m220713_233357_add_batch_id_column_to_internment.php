@@ -13,7 +13,7 @@ class m220713_233357_add_batch_id_column_to_internment extends Migration
     public function safeUp()
     {
         $this->addColumn('{{%internment}}', 'batch_id', $this->integer());
-        $this->addForeignKey('fk-batch-internment_id', 'internment', 'batch_id', 'batch', 'id');
+        $this->addForeignKey('fk-batch-internment_id', 'internment', 'batch_id', 'batch', 'id', 'CASCADE');
     }
 
     /**

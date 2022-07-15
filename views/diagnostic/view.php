@@ -422,6 +422,6 @@ $this->title = Yii::t('app', 'View Diagnostic: {name}', [
     </div>
     <br/>
     <?php if (!empty($model->batch_id)): ?>
-        <?= Html::a('Lote - ' . $model->batch_id, ["/batch/view", 'id' => $model->batch_id], ['class' => 'btn btn-md btn-primary']); ?>
+        <?= Html::a('Lote - ' . $model->batch_id, ["/batch/view", 'id' => $model->batch_id], ['class' => 'btn btn-md btn-success']); ?>
     <?php endif ?>
 </div>
