@@ -18,7 +18,7 @@ use yii\helpers\Html;
         <tr>
             <th></th>
             <th class="file">Número da Guía</th>
-            <th class="file">Tipo de internação</th>
+            <th class="file">Tipo</th>
             <th class="file">Data da autorização</th>
             <th class="file">Paciente</th>
             <th class="file">Operadora</th>

@@ -49,7 +49,9 @@ $this->title = Yii::t('app', 'View Diagnostic: {name}', [
     <?php else: ?>
         <h4 class="text-danger text-center"><i>Ficha removida em <?= Yii::$app->formatter->asDatetime($model->deleted_at, 'php:d/m/Y, H:i:s') ?></i></h4>
     <?php endif ?>
-    
+    <?php if(!empty($model->batch_id)): ?>
+        <h5 class="text-end display-block"><i>Ficha associada ao <span class="text-primary">  <?= Html::a('lote '.$model->batch_id, ["/batch/view", 'id' => $model->batch_id]); ?></span></i></h5>
+    <?php endif; ?>
     <div class="scrolly">
         <div class="rp-content ">
 
@@ -421,7 +423,5 @@ $this->title = Yii::t('app', 'View Diagnostic: {name}', [
         </div>
     </div>
     <br/>
-    <?php if (!empty($model->batch_id)): ?>
-        <?= Html::a('Lote - ' . $model->batch_id, ["/batch/view", 'id' => $model->batch_id], ['class' => 'btn btn-md btn-success']); ?>
-    <?php endif ?>
+  
 </div>

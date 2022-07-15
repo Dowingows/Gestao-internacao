@@ -2,12 +2,6 @@
 
 use yii\helpers\Html;
 
-/* @var $this \yii\web\View */
-/* @var $generator \yii\gii\Generator */
-/* @var $files CodeFile[] */
-/* @var $answers array */
-/* @var $id string panel ID */
-
 ?>
 <div class="default-view-files">
 
@@ -22,8 +16,8 @@ use yii\helpers\Html;
             <th class="file">Paciente</th>
             <th class="file">Operadora</th>
             <?php
-            $hasDiag = count($diagnosticos) > 0;
-            if ($hasDiag) {
+            $hasData = !empty($diagnostics);
+            if ($hasData) {
                 echo '<th><input type="checkbox" id="check-all"></th>';
             }
             ?>
@@ -31,24 +25,25 @@ use yii\helpers\Html;
         </thead>
         <tbody>
         <?php $i = 1; ?>
-        <?php foreach ($diagnosticos as $diagnostico): ?>
+        <?php foreach ($diagnostics  as $diagnostic): ?>
+            
             <tr>
-                <td> <?= Html::a('# ' . $i++, ['/diagnosticos/view/', 'id' => $diagnostico->id], ['target' => 'blank']); ?></td>
+                <td> <?= Html::a('# ' . $i++, ['/diagnostic/view/', 'id' => $diagnostic->id], ['target' => 'blank']); ?></td>
                 <td class="file">
-                    <?= $diagnostico->num_guia_atribuido_operadora; ?>
+                    <?= $diagnostic->number_form_assigned_operator; ?>
                 </td>
-
+               
                 <td class="action">
-                    <?= date('d/m/Y', strtotime($diagnostico->data_autorizacao)); ?>
+                    <?= date('d/m/Y', strtotime($diagnostic->authorization_date)); ?>
                 </td>
                 <td>
-                    <?= $diagnostico->paciente->nome ?>
+                    <?= $diagnostic->patient->name ?>
                 </td>
 
-                <td><?= $diagnostico->operadora->nome ?></td>
+                <td><?= $diagnostic->operator->name ?></td>
                 <td class="check">
                     <?=
-                    Html::checkBox("answers[{$diagnostico->id}]", isset($answers) ? isset($answers[$diagnostico->id]) : '');
+                    Html::checkBox("answers[{$diagnostic->id}]", isset($answers) ? isset($answers[$diagnostic->id]) : '');
                     ?>
                 </td>
             </tr>

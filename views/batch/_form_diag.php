@@ -2,9 +2,6 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
-use yii\helpers\ArrayHelper;
-
-use kartik\select2\Select2;
 
 /* @var $this yii\web\View */
 /* @var $internacoes app\models\Internacao[] */
@@ -17,12 +14,12 @@ use kartik\select2\Select2;
     <?php $form = ActiveForm::begin(); ?>
 
     <?= $this->render('components/table-picklist-diag', [
-        'diagnosticos' => $diagnosticos,
+        'diagnostics' => $diagnostics,
         'answers' => $answers
     ]) ?>
 
     <div class="form-group">
-        <?= Html::submitButton('Gerar', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+        <?= Html::submitButton('Gerar', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary', 'disabled' => empty($diagnostics)]) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

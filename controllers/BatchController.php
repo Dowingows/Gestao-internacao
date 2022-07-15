@@ -8,6 +8,7 @@ use app\models\BatchSearch;
 use app\models\Diagnostic;
 use app\models\Internment;
 use app\models\InternmentAllSearch;
+use app\models\DiagnosticAllSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -87,9 +88,9 @@ class BatchController extends Controller
         $answers = [];
 
         if (!empty($this->request->post())) {
-            $lote = $this->generateLote($this->request->post());
-            if (!empty($lote)) {
-                return $this->redirect(['view', 'id' => $lote->id]);
+            $batch = $this->generateLote($this->request->post());
+            if (!empty($batch)) {
+                return $this->redirect(['view', 'id' => $batch->id]);
             } else {
 
                 $error_message = "Erro ao gerar lote! Tente novamente";
@@ -159,24 +160,68 @@ class BatchController extends Controller
         return $batch;
     }
 
+    public function actionCreateDiagnostic()
+    {
+        $showForm = false;
+
+        $model = new Batch();
+
+        $searchModel = new DiagnosticAllSearch();
+
+      
+
+        if (empty(Yii::$app->request->queryParams['DiagnosticAllSearch'])) {
+            $diagnostics = $searchModel->search([]);
+        } else {
+            $showForm = true;
+            $diagnostics = $searchModel->search(Yii::$app->request->queryParams['DiagnosticAllSearch']);
+        }        
+        $answers = [];
+        if (!empty(Yii::$app->request->post())) {
+            $batch = $this->generateLoteDiag(Yii::$app->request->post());
+            if (!empty($batch)) {
+                return $this->redirect(['view', 'id' => $batch->id]);
+            } else {
+                $error_message = "Erro ao gerar lote! Tente novamente";
+                return $this->render('create-diagnostic', [
+                    'model' => $model,
+                    'diagnostics' => $diagnostics,
+                    'answers' => $answers,
+                    'search' => $searchModel,
+                    'showForm' => $showForm,
+                    'error_message' => $error_message
+                ]);
+            }
+        } else {
+
+            return $this->render('create-diagnostic', [
+                'model' => $model,
+                'diagnostics' => $diagnostics,
+                'answers' => $answers,
+                'search' => $searchModel,
+                'showForm' => $showForm
+            ]);
+        }
+    }
+
     protected function generateLoteDiag($answers)
     {
         $transaction = Yii::$app->db->beginTransaction();
-
-        $lote = null;
+       
+        $batch = null;
         try {
             $atLeastOne = false;
-            $lote = new Lote();
+            $batch = new Batch();
 
-            $lote->load(['Lote']);
-            if ($lote->save()) {
+            $batch->load(['Batch']);
+            if ($batch->save()) {
                 foreach ($answers['answers'] as $id => $checked) {
-                    $diagnostico = Diagnostico::findOne($id);
+                    $diagnostic = Diagnostic::findOne($id);
                     /*If the internacao has already linked with lote, then don`t link it*/
-                    if (empty($diagnostico->lote_id)) {
+                    if (empty($diagnostic->batch_id)) {
                         $atLeastOne = true;
-                        $diagnostico->lote_id = $lote->id;
-                        $diagnostico->save();
+                        $diagnostic->batch_id = $batch->id;
+                        $diagnostic->save();
                     }
                 }
 
@@ -185,25 +230,21 @@ class BatchController extends Controller
                 } else {
 
 
-                    $lote = null;
+                    $batch = null;
                     $transaction->rollBack();
                 }
             } else {
-                $lote = null;
+                $batch = null;
             }
 
         } catch (\Exception $e) {
-            print_r($e);
-            die;
-            $lote = null;
+            $batch = null;
             $transaction->rollBack();
         } catch (\Throwable $e) {
-            print_r($e);
-            die;
-            $lote = null;
+            $batch = null;
             $transaction->rollBack();
         }
-        return $lote;
+        return $batch;
     }
 
     
@@ -263,52 +304,6 @@ class BatchController extends Controller
         }
     }
 
-    public function actionCreateLoteDiagnostico()
-    {
-        $showForm = false;
-
-        $model = new Lote();
-
-        $search = new DiagnosticoAllSearch();
-
-
-        if (empty(Yii::$app->request->queryParams['DiagnosticoAllSearch'])) {
-            $diagnosticos = [];
-        } else {
-
-            $showForm = true;
-            $diagnosticos = $search->search(Yii::$app->request->queryParams);
-
-        }
-
-        $answers = [];
-
-
-        if (!empty(Yii::$app->request->post())) {
-            $lote = $this->generateLoteDiag(Yii::$app->request->post());
-            if (!empty($lote)) {
-                return $this->redirect(['view', 'id' => $lote->id]);
-            } else {
-                $error_message = "Erro ao gerar lote! Tente novamente";
-                return $this->render('create-diagnostico', [
-                    'model' => $model,
-                    'diagnosticos' => $diagnosticos,
-                    'answers' => 'answers',
-                    'search' => $search,
-                    'showForm' => $showForm,
-                    'error_message' => $error_message
-                ]);
-            }
-        } else {
-
-            return $this->render('create-diagnostico', [
-                'model' => $model,
-                'diagnosticos' => $diagnosticos,
-                'answers' => 'answers',
-                'search' => $search,
-                'showForm' => $showForm
-            ]);
-        }
-    }
+    
 
 }

@@ -20,7 +20,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <p>
         <?= Html::a('Gerar Lote Internação', ['create-internment'], ['class' => 'btn btn-success']) ?>
-        <?= Html::a('Gerar Lote Diagnóstico', ['create-lote-diagnostico'], ['class' => 'btn btn-primary']) ?>
+        <?= Html::a('Gerar Lote Diagnóstico', ['create-diagnostic'], ['class' => 'btn btn-primary']) ?>
     </p>
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
