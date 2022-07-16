@@ -40,7 +40,7 @@ class PatientSearch extends Patient
      */
     public function search($params)
     {
-        $query = Patient::find();
+        $query = Patient::find()->orderBy(['id' => SORT_DESC]);
 
         // add conditions that should always apply here
 

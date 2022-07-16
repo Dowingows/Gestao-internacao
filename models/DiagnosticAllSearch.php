@@ -48,7 +48,7 @@ class DiagnosticAllSearch extends Diagnostic
      */
     public function search($params)
     {
-        $query = Diagnostic::find();
+        $query = Diagnostic::find()->orderBy(['id' => SORT_DESC]);;
 
         // add conditions that should always apply here
         

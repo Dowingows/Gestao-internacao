@@ -7,7 +7,7 @@ class HomeCest
     public function ensureThatHomePageWorks(AcceptanceTester $I)
     {
         $I->amOnPage(Url::toRoute('/site/index'));        
-        $I->see('Congratulations');
+        $I->see('Seja bem-vindo!');
     
         $I->wait(2); // wait for page to be opened
         

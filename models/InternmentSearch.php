@@ -41,7 +41,7 @@ class InternmentSearch extends Internment
      */
     public function search($params)
     {
-        $query = Internment::find()->andWhere(['is', 'deleted_at', new \yii\db\Expression('null') ]);
+        $query = Internment::find()->orderBy(['id' => SORT_DESC])->andWhere(['is', 'deleted_at', new \yii\db\Expression('null') ]);
         $query->joinWith(['operator']);
         $query->joinWith(['patient']);
 

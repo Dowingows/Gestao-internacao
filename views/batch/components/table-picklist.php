@@ -22,6 +22,7 @@ use yii\helpers\Html;
             <th class="file">Data da autorização</th>
             <th class="file">Paciente</th>
             <th class="file">Operadora</th>
+            <th class="file">Tem Lote?</th>
             <?php
             $hasInternacao = !empty($internments);
             if ($hasInternacao) {
@@ -51,6 +52,7 @@ use yii\helpers\Html;
                 </td>
 
                 <td><?= $internment->operator->name ?></td>
+                <td><?= $internment->batch_id != null ? 'Sim' : 'Não' ?></td>
                 <td class="check">
                     <?=
                     Html::checkBox("answers[{$internment->id}]", isset($answers) ? isset($answers[$internment->id]) : '');

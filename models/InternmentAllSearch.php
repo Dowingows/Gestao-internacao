@@ -52,8 +52,8 @@ class InternmentAllSearch extends Internment
      */
     public function search($params)
     {
-        $query = Internment::find();
-
+        $query = Internment::find()->orderBy(['id' => SORT_DESC]);
+    
         // add conditions that should always apply here
 
         $this->load($params);

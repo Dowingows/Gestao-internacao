@@ -41,7 +41,7 @@ class DiagnosticSearch extends Diagnostic
      */
     public function search($params)
     {
-        $query = Diagnostic::find()->andWhere(['is', 'deleted_at', new \yii\db\Expression('null') ]);
+        $query = Diagnostic::find()->orderBy(['id' => SORT_DESC])->andWhere(['is', 'deleted_at', new \yii\db\Expression('null') ]);
         $query->joinWith(['operator']);
         $query->joinWith(['patient']);
         // add conditions that should always apply here
