@@ -10,6 +10,7 @@ use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\filters\AccessControl;
 
 /**
  * InternmentController implements the CRUD actions for Internment model.
@@ -30,6 +31,17 @@ class InternmentController extends Controller
                         'delete' => ['POST'],
                     ],
                 ],
+                'access' => [
+                    'class' => AccessControl::class,
+                    'only' => ['index', 'create', 'create-extension', 'update', 'view', 'delete'],
+                    'rules' => [
+                        [
+                            'actions' => ['index', 'create', 'create-extension', 'update', 'view', 'delete'],
+                            'allow' => true,
+                            'roles' => ['@'],
+                        ],
+                    ],
+                ]
             ]
         );
     }
