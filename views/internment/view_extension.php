@@ -44,6 +44,9 @@ $this->title = Yii::t('app', 'View Internment Extension: {name}', [
                     'method' => 'post',
                 ],
             ]) ?>
+
+            
+            <?= Html::a(Yii::t('app', 'Expenses'), ['view-expense', 'id' => $model->id], ['class' => 'btn btn-warning']) ?>
             <?= Html::a(Yii::t('app', 'Internment'), ['view', 'id' => $model->parent->id], ['class' => 'btn btn-secondary']) ?>
         </p>
     <?php else : ?>
