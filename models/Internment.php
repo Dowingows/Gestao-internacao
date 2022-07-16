@@ -244,6 +244,14 @@ class Internment extends \yii\db\ActiveRecord
         return $this->hasMany(InternmentProcedure::class, ['internment_id' => 'id']);
     }
 
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getExpense()
+    {
+        return $this->hasMany(Expense::class, ['internment_id' => 'id']);
+    }
+
     public static function appendGuiasTISS(array $internments, \DOMDocument $xml, &$parent)
     {
         foreach ($internments as $internment) {

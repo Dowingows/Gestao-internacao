@@ -33,10 +33,10 @@ class InternmentController extends Controller
                 ],
                 'access' => [
                     'class' => AccessControl::class,
-                    'only' => ['index', 'create', 'create-extension', 'update', 'view', 'delete'],
+                    'only' => ['index', 'create', 'create-extension', 'update', 'view', 'view-expense', 'delete'],
                     'rules' => [
                         [
-                            'actions' => ['index', 'create', 'create-extension', 'update', 'view', 'delete'],
+                            'actions' => ['index', 'create', 'create-extension', 'update', 'view', 'view-expense', 'delete'],
                             'allow' => true,
                             'roles' => ['@'],
                         ],
@@ -226,7 +226,7 @@ class InternmentController extends Controller
         }
         
     }
-
+    
     /**
      * Deletes an existing Internment model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
@@ -241,6 +241,22 @@ class InternmentController extends Controller
         $model->save();
 
         return $this->redirect(['index']);
+    }
+
+    /**
+     * Displays a single Internment model.
+     * @param int $id ID
+     * @return string
+     * @throws NotFoundHttpException if the model cannot be found
+     */
+    public function actionViewExpense($id)
+    {
+        $model = $this->findModel($id);
+        // print_r('<pre>');
+        // print_r($model->expense);die;
+        return $this->render('view_expense', [
+            'model' => $model,
+        ]);   
     }
 
     /**

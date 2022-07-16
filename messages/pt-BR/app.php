@@ -18,6 +18,7 @@ return [
     'Internments' => 'Internações',
     'Internment' => 'Internação',
     'Batches' => 'Lotes',
+    'Expenses' => 'Despesas',
     
     'Create Internment' => 'Cadastrar Internação',
     'Create Procedure' => 'Cadastrar Procedimento',
@@ -46,6 +47,7 @@ return [
     'Update Internment Extension: {name}' => 'Atualizar Prorrogação: {name}',
 
     'View Diagnostic: {name}' => 'Ficha de Diagnóstico: Nº {name}',
+    
     'View Internment: {name}' => 'Ficha de Internação: Nº {name}',
     'View Batch: {name}' => 'Lote: {name}',
     'View Internment Extension: {name}' => 'Ficha de Prorrogação: Nº {name}',
