@@ -48,7 +48,7 @@ class DiagnosticAllSearch extends Diagnostic
      */
     public function search($params)
     {
-        $query = Diagnostic::find()->orderBy(['id' => SORT_DESC]);;
+        $query = Diagnostic::find()->orderBy(['id' => SORT_DESC])->andWhere(['is', 'deleted_at', new \yii\db\Expression('null') ]);
 
         // add conditions that should always apply here
         

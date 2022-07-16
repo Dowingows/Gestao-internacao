@@ -52,7 +52,7 @@ class InternmentAllSearch extends Internment
      */
     public function search($params)
     {
-        $query = Internment::find()->orderBy(['id' => SORT_DESC]);
+        $query = Internment::find()->orderBy(['id' => SORT_DESC])->andWhere(['is', 'deleted_at', new \yii\db\Expression('null') ]);
     
         // add conditions that should always apply here
 
