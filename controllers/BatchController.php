@@ -12,7 +12,7 @@ use app\models\DiagnosticAllSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-
+use yii\filters\AccessControl;
 /**
  * BatchController implements the CRUD actions for Batch model.
  */
@@ -30,6 +30,17 @@ class BatchController extends Controller
                     'class' => VerbFilter::class,
                     'actions' => [
                         'delete' => ['POST'],
+                    ],
+                ],
+                'access' => [
+                    'class' => AccessControl::class,
+                    'only' => ['index', 'create-internment', 'create-diagnostic', 'view', 'delete', 'xml'],
+                    'rules' => [
+                        [
+                            'actions' => ['index', 'create-internment', 'create-diagnostic', 'view', 'delete', 'xml'],
+                            'allow' => true,
+                            'roles' => ['@'],
+                        ],
                     ],
                 ],
             ]

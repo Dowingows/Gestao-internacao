@@ -7,6 +7,7 @@ use app\models\ProfessionalSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\filters\AccessControl;
 
 /**
  * ProfessionalController implements the CRUD actions for Professional model.
@@ -22,9 +23,20 @@ class ProfessionalController extends Controller
             parent::behaviors(),
             [
                 'verbs' => [
-                    'class' => VerbFilter::className(),
+                    'class' => VerbFilter::class,
                     'actions' => [
                         'delete' => ['POST'],
+                    ],
+                ],
+                'access' => [
+                    'class' => AccessControl::class,
+                    'only' => ['index', 'create', 'update', 'view', 'delete'],
+                    'rules' => [
+                        [
+                            'actions' => ['index', 'create', 'update', 'view', 'delete'],
+                            'allow' => true,
+                            'roles' => ['@'],
+                        ],
                     ],
                 ],
             ]

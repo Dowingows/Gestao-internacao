@@ -9,7 +9,7 @@ use Exception;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-use yii\helpers\ArrayHelper;
+use yii\filters\AccessControl;
 
 /**
  * DiagnosticController implements the CRUD actions for Diagnostic model.
@@ -30,6 +30,17 @@ class DiagnosticController extends Controller
                         'delete' => ['POST'],
                     ],
                 ],
+                'access' => [
+                    'class' => AccessControl::class,
+                    'only' => ['index', 'create', 'update', 'view', 'delete'],
+                    'rules' => [
+                        [
+                            'actions' => ['index', 'create', 'update', 'view', 'delete'],
+                            'allow' => true,
+                            'roles' => ['@'],
+                        ],
+                    ],
+                ]
             ]
         );
     }

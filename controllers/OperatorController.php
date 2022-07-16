@@ -7,6 +7,7 @@ use app\models\OperatorSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\filters\AccessControl;
 
 /**
  * OperatorController implements the CRUD actions for Operator model.
@@ -22,9 +23,20 @@ class OperatorController extends Controller
             parent::behaviors(),
             [
                 'verbs' => [
-                    'class' => VerbFilter::className(),
+                    'class' => VerbFilter::class,
                     'actions' => [
                         'delete' => ['POST'],
+                    ],
+                ],
+                'access' => [
+                    'class' => AccessControl::class,
+                    'only' => ['index', 'create', 'update', 'view', 'delete'],
+                    'rules' => [
+                        [
+                            'actions' => ['index', 'create', 'update', 'view', 'delete'],
+                            'allow' => true,
+                            'roles' => ['@'],
+                        ],
                     ],
                 ],
             ]
