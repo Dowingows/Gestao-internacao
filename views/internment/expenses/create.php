@@ -11,7 +11,7 @@ $this->params['breadcrumbs'][] = ['label' => "Despesa da Internação {$internme
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="despesa-create">
-<?= Html::a('Voltar', ['view-expense', 'id' => $internment->id], ['class' => 'btn btn-primary']) ?>
+    <?= Html::a('Voltar', ['view-expense', 'id' => $internment->id], ['class' => 'btn btn-primary']) ?>
     <h2><?= Html::encode($this->title) ?> </h2>
 
     <?= $this->render('_form', [

@@ -73,7 +73,12 @@ use app\utils\Formatter;
                                     <td><?= $row->amount; ?></td>
                                     <td><?= Formatter::money($row->unit_price); ?></td>
                                     <td><?= Formatter::money($row->totalPrice); ?></td>
-                                    <td class="text-danger"><i class="fa fa-trash"></i></td>
+                                    <td class="text-danger">
+                                        
+                                        <?= Html::a('<i class="fa fa-trash"></i>', ['delete-expense', 'id' => $row->id], [
+                                            'class' => 'text-danger',
+                                        ]) ?>
+                                    </td>
                                 </tr>
                             <?php endforeach ?>
                         <?php else : ?>

@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use Yii;
 use app\models\Expense;
 use app\models\Internment;
 use app\models\InternmentProcedure;
@@ -43,10 +44,10 @@ class InternmentController extends Controller
                 ],
                 'access' => [
                     'class' => AccessControl::class,
-                    'only' => ['index', 'create', 'create-extension', 'update', 'view', 'view-expense', 'delete'],
+                    'only' => ['index', 'create', 'create-extension', 'update', 'view', 'view-expense', 'manage-expense', 'delete-expense', 'delete'],
                     'rules' => [
                         [
-                            'actions' => ['index', 'create', 'create-extension', 'update', 'view', 'view-expense', 'delete'],
+                            'actions' => ['index', 'create', 'create-extension', 'update', 'view', 'view-expense', 'manage-expense', 'delete-expense', 'delete'],
                             'allow' => true,
                             'roles' => ['@'],
                         ],
@@ -260,6 +261,17 @@ class InternmentController extends Controller
         return $this->render('expenses/view_expense', [
             'model' => $model,
         ]);   
+    }
+
+    public function actionDeleteExpense($id)
+    {
+        if (($model = Expense::findOne(['id' => $id])) !== null) {
+            $internment_id = $model->internment_id;
+            $model->delete();
+            return $this->redirect(['/internment/manage-expense/', 'id' => $internment_id]);
+        }
+
+        throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));  
     }
 
     public function actionManageExpense($id)
