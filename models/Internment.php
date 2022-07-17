@@ -402,74 +402,74 @@ class Internment extends \yii\db\ActiveRecord
         $valorTotal->appendChild($xml->createElement("ans:valorTotalGeral", sprintf("%.2f", $total)));
 
         /* OUTRAS DESPESAS */
-        // $outrasDespesas = $xml->createElement("ans:outrasDespesas");
+        $outrasDespesas = $xml->createElement("ans:outrasDespesas");
 
-        // foreach ($internment->despesas as $despesa) {
-        //     $xmlDespesa = $xml->createElement("ans:despesa");
-        //     $xmlDespesa->appendChild($xml->createElement("ans:codigoDespesa", sprintf("%02d", $despesa->cd)));
+        foreach ($internment->expense as $expenseRow) {
+            $xmlDespesa = $xml->createElement("ans:despesa");
+            $xmlDespesa->appendChild($xml->createElement("ans:codigoDespesa", sprintf("%02d", $expenseRow->cd)));
 
-        //     $servicosExecutados = $xml->createElement("ans:servicosExecutados");
-        //     $servicosExecutados->appendChild($xml->createElement("ans:dataExecucao", $despesa->data));
-        //     $servicosExecutados->appendChild($xml->createElement("ans:horaInicial", $despesa->hora_inicio));
-        //     $servicosExecutados->appendChild($xml->createElement("ans:horaFinal", $despesa->hora_final));
+            $servicosExecutados = $xml->createElement("ans:servicosExecutados");
+            $servicosExecutados->appendChild($xml->createElement("ans:dataExecucao", $expenseRow->date));
+            $servicosExecutados->appendChild($xml->createElement("ans:horaInicial", $expenseRow->start_time));
+            $servicosExecutados->appendChild($xml->createElement("ans:horaFinal", $expenseRow->end_time));
 
-        //     $codigoTabela = "";
-        //     $codigoProcedimento = "";
-        //     if (!empty($despesa->procedimento->id)) {
-        //         $codigoTabela = $despesa->procedimento->tabela;
-        //         $codigoProcedimento = $despesa->procedimento->codigo_procedimento;
-        //     } else if (!empty($despesa->medicamento->id)) {
-        //         $codigoTabela = 20;
-        //         $codigoProcedimento = $despesa->medicamento->cod_tiss;
-        //     } else if (!empty($despesa->material->id)) {
-        //         $codigoTabela = 19;
-        //         $codigoProcedimento = $despesa->material->cod_tnumm;
-        //     }
+            $codigoTabela = "";
+            $codigoProcedimento = "";
+            if (!empty($expenseRow->procedure->id)) {
+                $codigoTabela = $expenseRow->procedure->table;
+                $codigoProcedimento = $expenseRow->procedure->procedure_code;
+            } else if (!empty($expenseRow->medicine->id)) {
+                $codigoTabela = 20;
+                $codigoProcedimento = $expenseRow->medicine->cod_tiss;
+            } else if (!empty($expenseRow->supply->id)) {
+                $codigoTabela = 19;
+                $codigoProcedimento = $expenseRow->supply->cod_tnumm;
+            }
 
-        //     $servicosExecutados->appendChild($xml->createElement("ans:codigoTabela", $codigoTabela));
+            $servicosExecutados->appendChild($xml->createElement("ans:codigoTabela", $codigoTabela));
 
 
-        //     if (!empty($codigoProcedimento)) {
-        //         /*ESPECIAL POR CONTA DA ESCOLHA ENTRE MEDICAMENTOS; MATERIAIS DESCARTAVEIS E PROCEDIMENTOS*/
-        //         $servicosExecutados->appendChild($xml->createElement("ans:codigoProcedimento", $codigoProcedimento));
-        //     }
-        //     /*END ESPECIAL POR CONTA DA ESCOLHA ENTRE MEDICAMENTOS; MATERIAIS DESCARTAVEIS E PROCEDIMENTOS*/
+            if (!empty($codigoProcedimento)) {
+                /*ESPECIAL POR CONTA DA ESCOLHA ENTRE MEDICAMENTOS; MATERIAIS DESCARTAVEIS E PROCEDIMENTOS*/
+                $servicosExecutados->appendChild($xml->createElement("ans:codigoProcedimento", $codigoProcedimento));
+            }
+            /*END ESPECIAL POR CONTA DA ESCOLHA ENTRE MEDICAMENTOS; MATERIAIS DESCARTAVEIS E PROCEDIMENTOS*/
 
-        //     $servicosExecutados->appendChild($xml->createElement("ans:quantidadeExecutada", $despesa->qtd));
+            $servicosExecutados->appendChild($xml->createElement("ans:quantidadeExecutada", $expenseRow->amount));
 
-        //     /* PÇ = 044 na tabela de dominio 60*/
+            /* PÇ = 044 na tabela de dominio 60*/
 
-        //     $servicosExecutados->appendChild($xml->createElement("ans:unidadeMedida", '044'));
+            $servicosExecutados->appendChild($xml->createElement("ans:unidadeMedida", '044'));
 
-        //     if (!empty($despesa->fator_red_acresc)) {
-        //         $servicosExecutados->appendChild($xml->createElement("ans:reducaoAcrescimo", $despesa->fator_red_acresc));
-        //     } else {
-        //         $servicosExecutados->appendChild($xml->createElement("ans:reducaoAcrescimo", "1.00"));
-        //     }
+            if (!empty($expenseRow->fator_red_acresc)) {
+                $servicosExecutados->appendChild($xml->createElement("ans:reducaoAcrescimo", $expenseRow->fator_red_acresc));
+            } else {
+                $servicosExecutados->appendChild($xml->createElement("ans:reducaoAcrescimo", "1.00"));
+            }
 
-        //     $servicosExecutados->appendChild($xml->createElement("ans:valorUnitario", $despesa->valor_unitario));
-        //     $servicosExecutados->appendChild($xml->createElement("ans:valorTotal", sprintf("%.2f", $despesa->valor_unitario * $despesa->qtd)));
+            $servicosExecutados->appendChild($xml->createElement("ans:valorUnitario", $expenseRow->unit_price));
+            $servicosExecutados->appendChild($xml->createElement("ans:valorTotal", sprintf("%.2f", $expenseRow->totalPrice)));
 
-        //     $descricaoProcedimento = 'indefinido';
-        //     /*UMA DESPESA PODE TER UM DESTES TRÊS: MEDICAMENTO, PROCEDIMENTO OU MATERIAL*/
-        //     if (!empty($despesa->medicamento->descricao)) {
-        //         $descricaoProcedimento = $despesa->medicamento->descricao;
-        //     } else if (!empty($despesa->procedimento->descricao)) {
-        //         $descricaoProcedimento = $despesa->procedimento->descricao;
-        //     } else if (!empty($despesa->material->descricao)) {
-        //         $descricaoProcedimento = $despesa->material->descricao;
-        //     }
+            $procedureDescription = 'indefinido';
+            /*UMA DESPESA PODE TER UM DESTES TRÊS: MEDICAMENTO, PROCEDIMENTO OU MATERIAL*/
+            if (!empty($expenseRow->medicine->description)) {
+                $procedureDescription = $expenseRow->medicine->description;
+            } else if (!empty($expenseRow->procedure->description)) {
+                $procedureDescription = $expenseRow->procedure->description;
+            } else if (!empty($expenseRow->supply->description)) {
+                $procedureDescription = $expenseRow->supply->description;
+            }
 
-        //     $servicosExecutados->appendChild($xml->createElement("ans:descricaoProcedimento", $descricaoProcedimento));
-        //     $xmlDespesa->appendChild($servicosExecutados);
-        //     $outrasDespesas->appendChild($xmlDespesa);
-        // }
+            $servicosExecutados->appendChild($xml->createElement("ans:descricaoProcedimento", $procedureDescription));
+            $xmlDespesa->appendChild($servicosExecutados);
+            $outrasDespesas->appendChild($xmlDespesa);
+        }
 
         $guiaResumoInternacao->appendChild($cabecalhoGuia);
 
         /*SE NÃO ACHAR ACHAR A GUIA PRINCIPAL, USA O PROPRIO NÚMERO DA GUIA PARA REALIZAR ESSA TAREFA!  */
-        if (!empty($internment->num_guia_solic_internacao))
-            $guiaResumoInternacao->appendChild($xml->createElement("ans:numeroGuiaSolicitacaoInternacao", $internment->num_guia_solic_internacao));
+        if (!empty($internment->parent->number_form_assigned_operator))
+            $guiaResumoInternacao->appendChild($xml->createElement("ans:numeroGuiaSolicitacaoInternacao", $internment->parent->number_form_assigned_operator));
         else
             $guiaResumoInternacao->appendChild($xml->createElement("ans:numeroGuiaSolicitacaoInternacao", $internment->provider_form_number));
 
@@ -482,7 +482,7 @@ class Internment extends \yii\db\ActiveRecord
         $guiaResumoInternacao->appendChild($dadosSaidaInternacao);
         $guiaResumoInternacao->appendChild($procedimentoExecutados);
         $guiaResumoInternacao->appendChild($valorTotal);
-        // $guiaResumoInternacao->appendChild($outrasDespesas);
+        $guiaResumoInternacao->appendChild($outrasDespesas);
 
 
         return $guiaResumoInternacao;
