@@ -26,6 +26,8 @@ use Yii;
  */
 class Expense extends \yii\db\ActiveRecord
 {
+    public $despesa_code;
+
     /**
      * {@inheritdoc}
      */
@@ -62,14 +64,15 @@ class Expense extends \yii\db\ActiveRecord
             'id' => 'ID',
             'cd' => 'CD',
             'date' => 'Data',
-            'start_time' => 'Hora de Inicio (Horas:Min:Seg)',
-            'end_time' => 'Hora de Inicio (Horas:Min:Seg)',
+            'start_time' => 'Hora Início',
+            'end_time' => 'Hora Fim',
             'amount' => 'Quantidade',
             'unit_price' => 'Preço Unitário',
             'internment_id' => 'Internação',
             'supply_id' => 'Material',
             'medicine_id' => 'Medicamento',
             'procedure_id' => 'Procedimento',
+            'despesa_code' => 'Despesa'
         ];
     }
 

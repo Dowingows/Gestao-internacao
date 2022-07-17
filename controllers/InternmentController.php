@@ -2,15 +2,21 @@
 
 namespace app\controllers;
 
+use app\models\Expense;
 use app\models\Internment;
 use app\models\InternmentProcedure;
 use app\models\InternmentSearch;
+use app\models\Model;
 use Exception;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
+use yii\helpers\ArrayHelper;
+use yii\helpers\Json;
+use yii\web\Response;
+use yii\widgets\ActiveForm;
 
 /**
  * InternmentController implements the CRUD actions for Internment model.
@@ -243,20 +249,117 @@ class InternmentController extends Controller
         return $this->redirect(['index']);
     }
 
-    /**
-     * Displays a single Internment model.
-     * @param int $id ID
-     * @return string
-     * @throws NotFoundHttpException if the model cannot be found
-     */
+
     public function actionViewExpense($id)
     {
         $model = $this->findModel($id);
-        // print_r('<pre>');
-        // print_r($model->expense);die;
-        return $this->render('view_expense', [
+        return $this->render('expenses/view_expense', [
             'model' => $model,
         ]);   
+    }
+
+    public function actionManageExpense($id)
+    {
+
+        $model = new Expense();
+
+        $internment = Internment::findOne($id);
+
+        $expenseModel = $internment->expense;
+
+        if ($internment->load($this->request->post())) {
+            print_r('<pre>');
+            print_r($this->request->post());die('aki');
+            $oldIDs = ArrayHelper::map($expenseModel, 'id', 'id');
+            $expenseModel = Model::createMultiple(Expense::class, $expenseModel);
+            Model::loadMultiple($expenseModel, $this->request->post());
+
+            $deletedIDs = array_diff($oldIDs, array_filter(ArrayHelper::map($expenseModel, 'id', 'id')));
+
+            // ajax validation
+            if ($this->request->isAjax) {
+                $this->response->format = Response::FORMAT_JSON;
+                return ArrayHelper::merge(
+                    ActiveForm::validateMultiple($expenseModel),
+                    ActiveForm::validate($internment)
+                );
+            }
+
+            // validate all models
+            $valid = $internment->validate();
+            $valid = Model::validateMultiple($expenseModel) && $valid;
+
+            if ($valid) {
+                $transaction = \Yii::$app->db->beginTransaction();
+                try {
+                    if ($flag = $internment->save(false)) {
+                        if (!empty($deletedIDs)) {
+                            Expense::deleteAll(['id' => $deletedIDs]);
+                        }
+                        foreach ($expenseModel as $expense) {
+                            $expense->internment_id = $internment->id;
+                            if (!($flag = $expense->save(false))) {
+                                $transaction->rollBack();
+                                break;
+                            }
+                        }
+                    }
+                    if ($flag) {
+                        $transaction->commit();
+                        return $this->redirect(['/internment/view-expense/', 'id' => $internment->id]);
+                    }
+                } catch (Exception $e) {
+                    $transaction->rollBack();
+                }
+            }
+
+            return $this->render('expenses/create', [
+                'model' => $model,
+                'internment' => $internment,
+                'expenseModel' => (empty($expenseModel)) ? [new Expense] : $expenseModel
+            ]);
+        } else {
+            return $this->render('expenses/create', [
+                'model' => $model,
+                'internment' => $internment,
+                'expenseModel' => (empty($expenseModel)) ? [new Expense] : $expenseModel
+            ]);
+        }
+    }
+
+    public function actionExpenseList()
+    {
+        $data = [];;
+        if (isset($_POST['depdrop_parents'])) {
+            $parents = $_POST['depdrop_parents'];
+            if ($parents != null) {
+                $list = [];
+                $cd = $parents[0];
+                //Medicamentos
+                if ($cd == 2) {
+                    $medicamentos = \app\models\Medicine::find()->all();
+                    $list = ArrayHelper::map($medicamentos, 'id', 'description');
+                }
+                //Materiais
+                if ($cd == 3) {
+                    $materiais = \app\models\Supply::find()->all();
+                    $list = ArrayHelper::map($materiais, 'id', 'description');
+                }
+                //Procedimentos
+                if ($cd == 5) {
+                    $procedimentos = \app\models\Procedure::find()->all();
+                    $list = ArrayHelper::map($procedimentos, 'id', 'description');
+                }
+
+                $despesa = empty($_POST['depdrop_params'][0]) ? 0 : $_POST['depdrop_params'][0];
+
+                foreach ($list as $key => $value) {
+                    $data[] = ['id' => $key, 'name' => $value];
+                }
+                return Json::encode(['output' => $data, 'selected' => $despesa]);
+            }
+        }
+        return Json::encode(['output' => '', 'selected' => '']);
     }
 
     /**

@@ -56,7 +56,7 @@ function formatDate($date)
     <div class="rp-ficha-actions">
 
         <?= Html::a('Atualizar', ["/internment/manage-expense",
-            'internment_id' => $model->id],
+            'id' => $model->id],
             ['class' => 'btn btn-md btn-primary']); ?>
 
 
