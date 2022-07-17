@@ -6,8 +6,12 @@ use app\models\Expense;
 use app\models\Internment;
 use app\models\InternmentProcedure;
 use app\models\InternmentSearch;
+use app\models\Medicine;
 use app\models\Model;
+use app\models\Procedure;
+use app\models\Supply;
 use Exception;
+use app\utils\Formatter;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -267,64 +271,60 @@ class InternmentController extends Controller
 
         $expenseModel = $internment->expense;
 
-        if ($internment->load($this->request->post())) {
-            print_r('<pre>');
-            print_r($this->request->post());die('aki');
-            $oldIDs = ArrayHelper::map($expenseModel, 'id', 'id');
-            $expenseModel = Model::createMultiple(Expense::class, $expenseModel);
-            Model::loadMultiple($expenseModel, $this->request->post());
-
-            $deletedIDs = array_diff($oldIDs, array_filter(ArrayHelper::map($expenseModel, 'id', 'id')));
-
-            // ajax validation
-            if ($this->request->isAjax) {
-                $this->response->format = Response::FORMAT_JSON;
-                return ArrayHelper::merge(
-                    ActiveForm::validateMultiple($expenseModel),
-                    ActiveForm::validate($internment)
-                );
+        if ($this->request->isPost) {
+            $data = $this->request->post();
+            $this->formatExpenseFormData($data['Expense']);
+            if($model->load($data) && $model->save()){
+                return $this->redirect(['/internment/manage-expense/', 'id' => $internment->id]);
+            }else{
+                print_r('<pre>');
+                print_r($model->errors);die;
+                die('aki'); 
             }
-
-            // validate all models
-            $valid = $internment->validate();
-            $valid = Model::validateMultiple($expenseModel) && $valid;
-
-            if ($valid) {
-                $transaction = \Yii::$app->db->beginTransaction();
-                try {
-                    if ($flag = $internment->save(false)) {
-                        if (!empty($deletedIDs)) {
-                            Expense::deleteAll(['id' => $deletedIDs]);
-                        }
-                        foreach ($expenseModel as $expense) {
-                            $expense->internment_id = $internment->id;
-                            if (!($flag = $expense->save(false))) {
-                                $transaction->rollBack();
-                                break;
-                            }
-                        }
-                    }
-                    if ($flag) {
-                        $transaction->commit();
-                        return $this->redirect(['/internment/view-expense/', 'id' => $internment->id]);
-                    }
-                } catch (Exception $e) {
-                    $transaction->rollBack();
-                }
-            }
-
-            return $this->render('expenses/create', [
-                'model' => $model,
-                'internment' => $internment,
-                'expenseModel' => (empty($expenseModel)) ? [new Expense] : $expenseModel
-            ]);
-        } else {
+        }else{
             return $this->render('expenses/create', [
                 'model' => $model,
                 'internment' => $internment,
                 'expenseModel' => (empty($expenseModel)) ? [new Expense] : $expenseModel
             ]);
         }
+        
+    }
+
+    private function formatExpenseFormData(&$data)
+    {
+        
+        
+        if (!empty($data['despesa_code'])) {
+            
+            if ((int)$data['cd'] == 2) {
+                $data['medicine_id'] =$data['despesa_code'];
+                $data['supply_id'] = NULL;
+                $data['procedure_id'] = NULL;
+
+                $data['unit_price'] = Medicine::findOne($data['despesa_code'])->price;
+            }
+
+            if ((int)$data['cd'] == 3) {
+
+                $data['supply_id'] = $data['despesa_code'];
+                $data['medicine_id'] = NULL;
+                $data['procedure_id'] = NULL;
+                $data['unit_price'] = Supply::findOne($data['despesa_code'])->price;
+            }
+
+            if ((int)$data['cd'] == 5) {
+                $data['procedure_id'] = $data['despesa_code'];
+                $data['supply_id'] = NULL;
+                $data['medicine_id'] = NULL;
+                $data['unit_price'] = Procedure::findOne($data['despesa_code'])->price;
+            }
+            
+            unset($data['despesa_code']);
+        }
+
+        $data['date'] = Formatter::unformatDate($data['date']);
+
     }
 
     public function actionExpenseList()

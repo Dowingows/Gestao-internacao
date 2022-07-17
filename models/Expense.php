@@ -42,8 +42,9 @@ class Expense extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['cd', 'date', 'start_time', 'unit_price', 'internment_id'], 'required'],
-            [['date', 'start_time', 'end_time'], 'safe'],
+            [['cd', 'date',  'start_time', 'internment_id', 'amount'], 'required'],
+            [['amount'], 'integer', 'min' => 1],
+            [['date','despesa_code', 'start_time', 'end_time'], 'safe'],
             [['amount', 'internment_id', 'supply_id', 'medicine_id', 'procedure_id'], 'default', 'value' => null],
             [['amount', 'internment_id', 'supply_id', 'medicine_id', 'procedure_id'], 'integer'],
             [['unit_price'], 'number'],
@@ -119,9 +120,9 @@ class Expense extends \yii\db\ActiveRecord
     public function getItemName(){
 
         if($this->medicine_id != null){
-            return $this->medicine->name;
+            return $this->medicine->description;
         }else if($this->supply_id != null){
-            return $this->supply->name;
+            return $this->supply->description;
         }else if ($this->procedure_id != null){
             return $this->procedure->description;
         }
@@ -146,4 +147,7 @@ class Expense extends \yii\db\ActiveRecord
     {
         return $this->unit_price * $this->amount;
     }
+
+
+    
 }

@@ -1,5 +1,6 @@
 <?php
 
+use app\models\Expense;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use app\utils\Formatter;
@@ -21,46 +22,50 @@ use app\utils\Formatter;
                     <tr>
                         <td><b>Operadora</b></td>
                         <td><?= $internment->operator->name; ?></td>
-                    </tr>
-                    <tr>
                         <td><b>Executante</b></td>
                         <td><?= $internment->hospitalAuthorized->name; ?></td>
                     </tr>
+                    
                 </tbody>
             </table>
         </div>
         <div class="row">
             <div class="col">
-
+                <?= $this->render('_form_expenses', [
+                    'model' => $model,
+                    'internment' => $internment,
+                    'expenseModel' => new Expense(),
+                    'form' => $form
+                ]) ?>
             </div>
 
         </div>
+        
+        <br/>
         <h3>Lista de Despesas Cadastradas </h3>
         <h4>
-            Total: <?= !empty($expenseModel) ? Formatter::money(array_reduce($expenseModel, function($carry, $item){ 
-                    $carry += $item->totalPrice;
-                    return $carry; 
-            })) : Formatter::money(0) ?> 
+            Total: <?= !empty($expenseModel) ? Formatter::money(array_reduce($expenseModel, function ($carry, $item) {
+                        $carry += $item->totalPrice;
+                        return $carry;
+                    })) : Formatter::money(0) ?>
         </h4>
         <div class="row">
             <div class="table-responsive">
                 <table class="table table-striped table-bordered">
                     <thead>
-                        <th>CD</th>
                         <th> Item </th>
                         <th>Data</th>
                         <th>Hora inicial</th>
                         <th>Hora final</th>
                         <th>Quantidade</th>
-                        <th>Valor Unitario</th>
-                        <th>Valor Total-R$</th>
+                        <th>Preço Unitário</th>
+                        <th>Preço Total</th>
                         <th>#</th>
                     </thead>
                     <tbody>
                         <?php if (!empty($expenseModel)) : ?>
                             <?php foreach ($expenseModel as $row) : ?>
                                 <tr>
-                                    <td><?= $row->cd; ?></td>
                                     <td><?= $row->itemName; ?></td>
                                     <td><?= Formatter::date($row->date); ?></td>
                                     <td><?= $row->start_time; ?></td>
