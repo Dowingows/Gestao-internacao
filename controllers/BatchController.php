@@ -294,7 +294,7 @@ class BatchController extends Controller
     public function actionXml($id)
     {
         $batch = Batch::findOne($id);
-        $file_name = "psicoclinica_lote_{$id}_" . date('dmy_his');
+        $file_name = "lote_{$id}_" . date('dmy_his');
         if (!empty($batch->internments)) {
             $data = Internment::generateXML($batch, 1);
 
