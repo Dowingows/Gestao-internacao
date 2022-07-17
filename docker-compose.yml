@@ -17,6 +17,7 @@ services:
       - ./views:/var/www/views
       - ./models:/var/www/models
       - ./controllers:/var/www/controllers
+      - ./utils:/var/www/utils
       - ./tests:/var/www/tests
       - ./messages:/var/www/messages
       - ./migrations:/var/www/migrations

@@ -115,4 +115,35 @@ class Expense extends \yii\db\ActiveRecord
     {
         return $this->hasOne(Supply::class, ['id' => 'supply_id']);
     }
+
+    public function getItemName(){
+
+        if($this->medicine_id != null){
+            return $this->medicine->name;
+        }else if($this->supply_id != null){
+            return $this->supply->name;
+        }else if ($this->procedure_id != null){
+            return $this->procedure->description;
+        }
+
+        return '-';
+    }
+
+    public function getItemPrice(){
+
+        if($this->medicine_id != null){
+            return $this->medicine->price;
+        }else if($this->supply_id != null){
+            return $this->supply->price;
+        }else if ($this->procedure_id != null){
+            return $this->procedure->description;
+        }
+
+        return '-';
+    }
+
+    public function getTotalPrice()
+    {
+        return $this->unit_price * $this->amount;
+    }
 }
