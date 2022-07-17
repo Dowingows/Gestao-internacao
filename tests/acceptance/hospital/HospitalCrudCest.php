@@ -2,7 +2,7 @@
 
 use yii\helpers\Url;
 
-class HospitalCrudCest
+class HospitalCrudCest 
 {
     protected $nameField = 'input[name="Hospital[name]"]';
     protected $tradeNameFiled = 'input[name="Hospital[trade_name]"]';
@@ -11,6 +11,17 @@ class HospitalCrudCest
 
     public function _before(AcceptanceTester $I)
     {
+        $I->amOnPage(Url::toRoute('/site/login'));
+        $I->see('Login', 'h1');
+
+        $I->amGoingTo('try to login with correct credentials');
+        $I->fillField('input[name="LoginForm[username]"]', 'admin');
+        $I->fillField('input[name="LoginForm[password]"]', '123456');
+        $I->click('login-button');
+        $I->wait(2); // wait for button to be clicked
+
+        $I->see('Logout');
+
         $I->amOnPage(Url::toRoute('/hospital/index'));
     }
 

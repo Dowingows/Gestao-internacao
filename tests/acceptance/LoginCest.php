@@ -11,11 +11,11 @@ class LoginCest
 
         $I->amGoingTo('try to login with correct credentials');
         $I->fillField('input[name="LoginForm[username]"]', 'admin');
-        $I->fillField('input[name="LoginForm[password]"]', 'admin');
+        $I->fillField('input[name="LoginForm[password]"]', '123456');
         $I->click('login-button');
         $I->wait(2); // wait for button to be clicked
 
-        $I->expectTo('see user info');
         $I->see('Logout');
+        $I->click('Logout');
     }
 }
